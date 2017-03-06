@@ -1,7 +1,17 @@
 <?php
+
+    /**
+    * @backupGlobals disabled
+    * @backupStaticAttributes disabled
+    */
     require_once 'src/Task.php';
 
-    class SourceTest extends PHPUnit_Framework_TestCase
+    $server = 'mysql:host=localhost:8889;dbname=';
+    $username = 'root';
+    $password = 'root';
+    $DB = new PDO($server, $username, $password);
+
+    class TaskTest extends PHPUnit_Framework_TestCase
     {
         function test_source_function() {
             $input = ' ';
