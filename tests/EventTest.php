@@ -150,6 +150,24 @@
             $this->assertEquals($new_description, $result);
         }
 
+        function test_updateLocation()
+        {
+            $user_id = '1';
+            $name = 'Sock Puppet Convention';
+            $date_time = '2017-10-10 13:30:00';
+            $description = 'Soft core puppet enthusiasts.';
+            $location = 'Portland, OR';
+            $test_event = new Event ($user_id, $name, $date_time, $description, $location);
+            $test_event->save();
+
+            $new_location = 'Serious puppeteers only!';
+            $test_event->updateLocation($new_location);
+
+            $result = $test_event->getLocation();
+
+            $this->assertEquals($new_location, $result);
+        }
+
     }
 
 ?>
