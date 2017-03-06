@@ -102,6 +102,12 @@
         $this->setLocation($new_location);
     }
 
+    function delete()
+    {
+        $GLOBALS['DB']->exec(
+        "DELETE FROM events WHERE id = {$this->getid()};");
+    }
+
     static function getAll()
     {
         $returned_events = $GLOBALS['DB']->query("SELECT * FROM events;");

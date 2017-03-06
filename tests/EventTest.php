@@ -168,7 +168,7 @@
             $this->assertEquals($new_location, $result);
         }
 
-        function test_updateDateT()
+        function test_updateDateTime()
         {
             $user_id = '1';
             $name = 'Sock Puppet Convention';
@@ -184,6 +184,30 @@
             $result = $test_event->getDateTime();
 
             $this->assertEquals($new_date_time, $result);
+        }
+
+        function test_delete()
+        {
+            $user_id = '1';
+            $name = 'Sock Puppet Convention';
+            $date_time = '2017-10-10 13:30:00';
+            $description = 'Soft core puppet enthusiasts.';
+            $location = 'Portland, OR';
+            $test_event = new Event ($user_id, $name, $date_time, $description, $location);
+            $test_event->save();
+
+            $user_id2 = '2';
+            $name2 = 'Sausage Convention';
+            $date_time2 = '2017-12-10 13:30:00';
+            $description2 = 'For CULINARY sausage enthusiasts.';
+            $location2 = 'Portland, OR';
+            $test_event2 = new Event ($user_id2, $name2, $date_time2, $description2, $location2);
+            $test_event2->save();
+
+            $test_event->delete();
+            $result = Event::getAll();
+
+            $this->assertEquals([$test_event2], $result);
         }
 
     }
