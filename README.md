@@ -22,6 +22,23 @@ _{Leave nothing to chance! You want it to be easy for potential users, employers
 
 _{Are there issues that have not yet been resolved that you want to let users know you know?  Outline any issues that would impact use of your application.  Share any workarounds that are in place. }_
 
+## Database SQL Constructors
+
+CREATE DATABASE rsvparty_test;
+USE rsvparty_test;
+CREATE TABLE users (id serial PRIMARY KEY, name VARCHAR (255), password VARCHAR (255), guest_key VARCHAR (255));
+CREATE TABLE events (id serial PRIMARY KEY, user_id INT, name VARCHAR (255), date_time DATETIME, description VARCHAR (255), location VARCHAR (255));
+CREATE TABLE tasks (id serial PRIMARY KEY, name VARCHAR (255), description VARCHAR (255), event_id INT);
+CREATE TABLE attendees (id serial PRIMARY KEY, name VARCHAR (255), event_id INT);
+CREATE TABLE attendees_tasks (id serial PRIMARY KEY, attendee_id INT, task_id INT);
+CREATE DATABASE rsvparty;
+USE rsvparty;
+CREATE TABLE users (id serial PRIMARY KEY, name VARCHAR (255), password VARCHAR (255), guest_key VARCHAR (255));
+CREATE TABLE events (id serial PRIMARY KEY, user_id INT, name VARCHAR (255), date_time DATETIME, description VARCHAR (255), location VARCHAR (255));
+CREATE TABLE tasks (id serial PRIMARY KEY, name VARCHAR (255), description VARCHAR (255), event_id INT);
+CREATE TABLE attendees (id serial PRIMARY KEY, name VARCHAR (255), event_id INT);
+CREATE TABLE attendees_tasks (id serial PRIMARY KEY, attendee_id INT, task_id INT);
+
 ## Support and contact details
 
 _{Let people know what to do if they run into any issues or have questions, ideas or concerns.  Encourage them to contact you or make a contribution to the code.}_
