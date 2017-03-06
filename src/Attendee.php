@@ -39,6 +39,18 @@
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
+        function update($new_name)
+        {
+            $this->setName($new_name);
+            $update = $GLOBALS['DB']->prepare("UPDATE attendees SET name = :name WHERE id = :id;");
+            $update->execute([':name' => $this->getName(), ':id' => $this->getId()]);
+        }
+
+        function delete()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM attendees WHERE id = {$this->getId()};");
+        }
+
         static function getAll()
         {
             $returned_attendees = $GLOBALS['DB']->query("SELECT * FROM attendees;");
