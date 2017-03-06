@@ -23,8 +23,8 @@
             $name = 'task';
             $description = 'things';
             $event_id = '4';
-
             $new_task = new Task($name, $description, $event_id);
+
             $new_task->save();
             $result = Task::getAll();
 
@@ -36,14 +36,12 @@
             $name = 'task';
             $description = 'things';
             $event_id = '4';
-
             $new_task = new Task($name, $description, $event_id);
             $new_task->save();
 
             $name2 = 'task';
             $description2 = 'things';
             $event_id2 = '4';
-
             $new_task2 = new Task($name2, $description2, $event_id2);
             $new_task2->save();
 
@@ -57,14 +55,12 @@
             $name = 'task';
             $description = 'things';
             $event_id = '4';
-
             $new_task = new Task($name, $description, $event_id);
             $new_task->save();
 
             $name2 = 'task';
             $description2 = 'things';
             $event_id2 = '4';
-
             $new_task2 = new Task($name2, $description2, $event_id2);
             $new_task2->save();
 
@@ -79,13 +75,11 @@
             $name = 'task';
             $description = 'things';
             $event_id = '4';
-
             $new_task = new Task($name, $description, $event_id);
             $new_task->save();
 
             $new_name = 'new';
             $new_description = 'party';
-
             $new_task->update($new_name, $new_description);
 
             $result = Task::getAll();
@@ -99,19 +93,16 @@
             $name = 'task';
             $description = 'things';
             $event_id = '4';
-
             $new_task = new Task($name, $description, $event_id);
             $new_task->save();
 
             $name2 = 'task';
             $description2 = 'party';
             $event_id2 = '5';
-
             $new_task2 = new Task($name2, $description2, $event_id2);
             $new_task2->save();
 
             $new_task2->delete();
-
             $result = Task::getAll();
 
             $this->assertEquals([$new_task], $result);

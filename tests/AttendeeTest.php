@@ -5,6 +5,7 @@
     * @backupStaticAttributes disabled
     */
     require_once "src/Attendee.php";
+    require_once "src/Task.php";
 
     $server = 'mysql:host=localhost:8889;dbname=rsvparty_test';
     $username = 'root';
@@ -18,6 +19,7 @@
         protected function tearDown()
         {
             Attendee::deleteAll();
+            Task::deleteAll();
         }
 
         function test_save()
@@ -97,6 +99,51 @@
             $result = Attendee::getAll();
 
             $this->assertEquals([$test_attendee2], $result);
+        }
+
+        function test_addTask()
+        {
+            $name = 'Geoff';
+            $event_id = '2';
+            $test_attendee = new Attendee($name, $event_id);
+            $test_attendee->save();
+
+            $name = 'task';
+            $description = 'things';
+            $event_id = '4';
+            $test_task = new Task($name, $description, $event_id);
+            $test_task->save();
+
+            $test_attendee->addTask($test_task->getId());
+            $result = $test_attendee->getTasks();
+
+            $this->assertEquals([$test_task], $result);
+        }
+
+        function test_getTasks()
+        {
+            $name = 'Geoff';
+            $event_id = '2';
+            $test_attendee = new Attendee($name, $event_id);
+            $test_attendee->save();
+
+            $name = 'task';
+            $description = 'things';
+            $event_id = '4';
+            $test_task = new Task($name, $description, $event_id);
+            $test_task->save();
+
+            $name = 'tisk';
+            $description = 'thungs';
+            $event_id = '2';
+            $test_task2 = new Task($name, $description, $event_id);
+            $test_task2->save();
+
+            $test_attendee->addTask($test_task->getId());
+            $test_attendee->addTask($test_task2->getId());
+            $result = $test_attendee->getTasks();
+
+            $this->assertEquals([$test_task, $test_task2], $result);
         }
     }
 ?>
