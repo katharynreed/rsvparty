@@ -62,11 +62,18 @@
         return $this->id;
     }
 
+    function save()
+    {
+        $exec = $GLOBALS['DB']->prepare("INSERT INTO events (user_id, name, date_time, description, location) VALUES (:user_id, :name, :date_time, :description, :location);");
+        $exec->execute([':user_id' => $this->getUserId(), ':name' => $this->getName(), ':date_time' => $this->getDateTime(), ':description' => $this->getDescription(), ':location' => $this->getLocation()]);
+        $this->id = $GLOBALS['DB']->lastInsertId();
+        }
+
     static function getAll()
     {
         $returned_events = $GLOBALS['DB']->query("SELECT * FROM events;");
         $events = [];
-        foreach ($events as $event) {
+        foreach ($returned_events as $event) {
             $user_id = $event['user_id'];
             $name = $event['name'];
             $date_time = $event['date_time'];
@@ -82,6 +89,18 @@
     static function deleteAll()
     {
         $GLOBALS['DB']->exec("DELETE FROM events;");
+    }
+
+    static function find()
+    {
+        $found_event;
+        $events = Event::getAll();
+        foreach($events as $event) {
+            if ($event->getId() == $id) {
+                $found_event = $event;
+            }
+        }
+        return $found_event;
     }
 
   }
