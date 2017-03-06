@@ -10,7 +10,23 @@
             $this->name = $name;
             $this->password = $password;
             $this->id = $id;
-            $this->guest_key = $guest_key;
+            if ($guest_key == null) {
+                $this->generateKey();
+            } else {
+                $this->guest_key = $guest_key;
+            }
+        }
+
+        protected function generateKey()
+        {
+            $alph = "0123456789abcdefghijklmnopqrstuvwxyz";
+            $key = $alph[mt_rand(0, 35)] . $alph[mt_rand(0, 35)] . $alph[mt_rand(0, 35)] . $alph[mt_rand(0, 35)] . $alph[mt_rand(0, 35)];
+            $test = $GLOBALS['DB']->query("SELECT * FROM users WHERE guest_key = {$key};");
+            if ($test) {
+                $this->generateKey();
+            } else {
+                $this->guest_key = $key;
+            }
         }
 
         function setName($name) {

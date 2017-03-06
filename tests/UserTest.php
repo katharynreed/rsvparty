@@ -23,8 +23,7 @@
         {
             $name = 'Bob';
             $password = 'pass';
-            $guest_key = '2';
-            $new_user = new User($name, $password, $guest_key);
+            $new_user = new User($name, $password);
             $new_user->save();
 
             $result = User::getAll();
@@ -36,13 +35,11 @@
         {
             $name = 'Bob';
             $password = 'pass';
-            $guest_key = '2';
             $new_user = new User($name, $password, $guest_key);
             $new_user->save();
 
             $name2 = 'Bob2';
             $password2 = 'pass2';
-            $guest_key2 = '22';
             $new_user2 = new User($name2, $password2, $guest_key2);
             $new_user2->save();
 
@@ -56,13 +53,11 @@
         {
             $name = 'Bob';
             $password = 'pass';
-            $guest_key = '2';
             $new_user = new User($name, $password, $guest_key);
             $new_user->save();
 
             $name2 = 'Bob2';
             $password2 = 'pass2';
-            $guest_key2 = '22';
             $new_user2 = new User($name2, $password2, $guest_key2);
             $new_user2->save();
 
