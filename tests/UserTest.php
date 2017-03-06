@@ -35,12 +35,12 @@
         {
             $name = 'Bob';
             $password = 'pass';
-            $new_user = new User($name, $password, $guest_key);
+            $new_user = new User($name, $password);
             $new_user->save();
 
             $name2 = 'Bob2';
             $password2 = 'pass2';
-            $new_user2 = new User($name2, $password2, $guest_key2);
+            $new_user2 = new User($name2, $password2);
             $new_user2->save();
 
             $result = User::getAll();
@@ -53,18 +53,35 @@
         {
             $name = 'Bob';
             $password = 'pass';
-            $new_user = new User($name, $password, $guest_key);
+            $new_user = new User($name, $password);
             $new_user->save();
 
             $name2 = 'Bob2';
             $password2 = 'pass2';
-            $new_user2 = new User($name2, $password2, $guest_key2);
+            $new_user2 = new User($name2, $password2);
             $new_user2->save();
 
             User::deleteAll();
             $result = User::getAll();
 
             $this->assertEquals([], $result);
+        }
+
+        function test_find()
+        {
+            $name = 'Bob';
+            $password = 'pass';
+            $new_user = new User($name, $password);
+            $new_user->save();
+
+            $name2 = 'Bob2';
+            $password2 = 'pass2';
+            $new_user2 = new User($name2, $password2);
+            $new_user2->save();
+
+            $result = User::find($new_user->getId());
+
+            $this->assertEquals($new_user, $result);
         }
     }
 
