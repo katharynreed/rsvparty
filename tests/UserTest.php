@@ -46,7 +46,6 @@
             $result = User::getAll();
 
             $this->assertEquals([$new_user, $new_user2], $result);
-
         }
 
         function test_deleteAll()
@@ -82,6 +81,38 @@
             $result = User::find($new_user->getId());
 
             $this->assertEquals($new_user, $result);
+        }
+
+        function test_update()
+        {
+            $name = 'Bob';
+            $password = 'pass';
+            $new_user = new User($name, $password);
+            $new_user->save();
+
+            $new_name = 'Dave';
+            $new_user->update($new_name, $password);
+            $result = User::getAll();
+
+            $this->assertEquals($new_name, $result[0]->getName());
+        }
+
+        function test_delete()
+        {
+            $name = 'Bob';
+            $password = 'pass';
+            $new_user = new User($name, $password);
+            $new_user->save();
+
+            $name2 = 'Bob2';
+            $password2 = 'pass2';
+            $new_user2 = new User($name2, $password2);
+            $new_user2->save();
+
+            $new_user->delete();
+            $result = User::getAll();
+
+            $this->assertEquals([$new_user2], $result);
         }
     }
 

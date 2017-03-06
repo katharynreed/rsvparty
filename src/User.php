@@ -66,6 +66,19 @@
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
+        function update($new_name, $new_password)
+        {
+            $this->setName($new_name);
+            $this->setPassword($new_password);
+            $update = $GLOBALS['DB']->prepare("UPDATE users SET name = :name, password = :password WHERE id = :id;");
+            $update->execute([':name' => $this->getName(), ':password' => $this->getPassword(), ':id' => $this->getId()]);
+        }
+
+        function delete()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM users WHERE id = {$this->getId()};");
+        }
+
         static function find($id)
         {
             $returned_user = $GLOBALS['DB']->query("SELECT * FROM users WHERE id = {$id};");
