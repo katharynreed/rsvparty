@@ -125,7 +125,7 @@
 
             $test_task->addAttendee($test_attendee->getId());
             $result = $test_task->getAttendees();
-            
+
             $this->assertEquals([$test_attendee], $result);
         }
 

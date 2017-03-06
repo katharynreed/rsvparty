@@ -1,5 +1,4 @@
 <?php
-
     /**
     * @backupGlobals disabled
     * @backupStaticAttributes disabled
@@ -115,5 +114,6 @@
             $this->assertEquals([$new_user2], $result);
         }
     }
+>>>>>>> upstream/master
 
 ?>
