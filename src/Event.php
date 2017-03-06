@@ -37,6 +37,11 @@
         return $this->date_time;
     }
 
+    function setDateTime($new_date_time)
+    {
+        $this->date_time = $new_date_time;
+    }
+
     function getDescription()
     {
         return $this->description;
@@ -68,6 +73,34 @@
         $exec->execute([':user_id' => $this->getUserId(), ':name' => $this->getName(), ':date_time' => $this->getDateTime(), ':description' => $this->getDescription(), ':location' => $this->getLocation()]);
         $this->id = $GLOBALS['DB']->lastInsertId();
         }
+
+    function updateName($new_name)
+    {
+        $exec = $GLOBALS['DB']->prepare("UPDATE events SET name = :name WHERE id = :id;");
+        $exec->execute([':name' => $new_name, ':id' =>$this->getId()]);
+        $this->setName($new_name);
+    }
+
+    function updateDateTime($new_date_time)
+    {
+        $exec = $GLOBALS['DB']->prepare("UPDATE events SET date_time = :date_time WHERE id = :id;");
+        $exec->execute([':date_time' => $new_date_time, ':id' =>$this->getId()]);
+        $this->setDateTime($new_date_time);
+    }
+
+    function updateDescription($new_description)
+    {
+        $exec = $GLOBALS['DB']->prepare("UPDATE events SET description = :description WHERE id = :id;");
+        $exec->execute([':description' => $new_description, ':id' =>$this->getId()]);
+        $this->setDescription($new_description);
+    }
+
+    function updateLocation($new_location)
+    {
+        $exec = $GLOBALS['DB']->prepare("UPDATE events SET location = :location WHERE id = :id;");
+        $exec->execute([':location' => $new_location, ':id' =>$this->getId()]);
+        $this->setLocation($new_location);
+    }
 
     static function getAll()
     {
