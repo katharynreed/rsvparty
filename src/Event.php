@@ -91,7 +91,7 @@
         $GLOBALS['DB']->exec("DELETE FROM events;");
     }
 
-    static function find()
+    static function find($id)
     {
         $found_event;
         $events = Event::getAll();
