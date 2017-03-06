@@ -1,4 +1,7 @@
 <?php
+
+    require_once 'Attendee.php';
+
     class Task {
         private $name;
         private $description;
@@ -61,6 +64,20 @@
         function delete()
         {
             $GLOBALS['DB']->exec("DELETE FROM tasks WHERE id = {$this->getId()};");
+            $GLOBALS['DB']->exec("DELETE FROM attendees_tasks WHERE task_id = {$this->getId()};");
+        }
+
+        function addAttendee($id)
+        {
+            $GLOBALS['DB']->exec("INSERT INTO attendees_tasks (task_id, attendee_id) VALUES ({$this->getId()}, {$id});");
+        }
+
+        function getAttendees()
+        {
+            $returned_attendees = $GLOBALS['DB']->query("SELECT attendees.* FROM tasks JOIN attendees_tasks ON (attendees_tasks.task_id = tasks.id) JOIN attendees ON (attendees.id = attendees_tasks.attendee_id) WHERE tasks.id = {$this->getId()};");
+
+            $attendees = $returned_attendees->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Attendee', ['name', 'event_id', 'id']);
+            return $attendees;
         }
 
         static function getAll()
@@ -77,6 +94,7 @@
         static function deleteAll()
         {
             $GLOBALS['DB']->exec("DELETE FROM tasks;");
+            $GLOBALS['DB']->exec("DELETE FROM attendees_tasks;");
         }
 
     }

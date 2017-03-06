@@ -52,6 +52,7 @@
         function delete()
         {
             $GLOBALS['DB']->exec("DELETE FROM attendees WHERE id = {$this->getId()};");
+            $GLOBALS['DB']->exec("DELETE FROM attendees_tasks WHERE attendee_id = {$this->getId()};");
         }
 
         function addTask($id)
@@ -83,6 +84,7 @@
         static function deleteAll()
         {
             $GLOBALS['DB']->exec("DELETE FROM attendees;");
+            $GLOBALS['DB']->exec("DELETE FROM attendees_tasks;");
         }
     }
 
