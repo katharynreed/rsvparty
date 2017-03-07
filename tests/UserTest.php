@@ -15,6 +15,9 @@
     {
         protected function tearDown()
         {
+            Event::deleteAll();
+            Attendee::deleteAll();
+            Task::deleteAll();
             User::deleteAll();
         }
 
@@ -114,6 +117,6 @@
             $this->assertEquals([$new_user2], $result);
         }
     }
->>>>>>> upstream/master
+
 
 ?>
