@@ -59,6 +59,13 @@
             return $this->id;
         }
 
+        function logIn($password)
+        {
+            if ($password == $this->getPassword()) {
+                $_SESSION['user'] = $this;
+            }
+        }
+
         function save()
         {
             $save = $GLOBALS['DB']->prepare("INSERT INTO users (name, password, guest_key) VALUES (:name, :password, :guest_key);");

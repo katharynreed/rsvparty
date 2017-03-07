@@ -3,6 +3,12 @@
     require_once __DIR__."/../vendor/autoload.php";
     require_once __DIR__."/../src/src.php";
 
+    session_start();
+    if (empty($_SESSION['user'])) {
+        $_SESSION['user'] = [];
+        $_SESSION['attendee'] = [];
+    }
+
     $app = new Silex\Application();
     $app->register(new Silex\Provider\TwigServiceProvider(), ["twig.path" => __DIR__."/../views"]);
 

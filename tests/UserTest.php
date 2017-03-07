@@ -16,6 +16,7 @@
         protected function tearDown()
         {
             User::deleteAll();
+            $_SESSION['user'] = [];
         }
 
         function test_save()
@@ -113,7 +114,32 @@
 
             $this->assertEquals([$new_user2], $result);
         }
+
+        function test_logIn_success()
+        {
+            $name = 'Bob';
+            $password = 'pass';
+            $new_user = new User($name, $password);
+            $new_user->save();
+
+            $new_user->logIn($password);
+            $result = $_SESSION['user'];
+
+            $this->assertEquals($new_user, $result);
+        }
+
+        function test_logIn_failure()
+        {
+            $name = 'Bob';
+            $password = 'pass';
+            $new_user = new User($name, $password);
+            $new_user->save();
+
+            $new_user->logIn('wrong');
+            $result = $_SESSION['user'];
+
+            $this->assertEquals([], $result);
+        }
     }
->>>>>>> upstream/master
 
 ?>
