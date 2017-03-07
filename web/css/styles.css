@@ -1,5 +1,9 @@
 /*base.html.twig styling*/
-
+body {
+    background-image: url(/../img/rsvparty.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
 .jumbotron {
     text-align: center;
 }

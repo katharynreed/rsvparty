@@ -20,40 +20,6 @@
             User::deleteAll();
         }
 
-        function test_getters()
-        {
-            $user_id = '1';
-            $name = 'Sock Puppet Convention';
-            $date_time = '2017-10-10 13:30:00';
-            $description = 'Soft core puppet enthusiasts.';
-            $location = 'Portland, OR';
-            $id = '1';
-            $test_event = new Event ($user_id, $name, $date_time, $description, $location, $id);
-
-            $result = array($test_event->getUserId(), $test_event->getName(), $test_event->getDateTime(), $test_event->getDescription(), $test_event->getLocation(), $test_event->getId());
-            $expected_result = array('1','Sock Puppet Convention', '2017-10-10 13:30:00', 'Soft core puppet enthusiasts.', 'Portland, OR', '1');
-            $this->assertEquals($result, $expected_result);
-        }
-
-        function test_setters()
-        {
-            $user_id = '1';
-            $name = 'Sock Puppet Convention';
-            $date_time = '2017-10-10 13:30:00';
-            $description = 'Soft core puppet enthusiasts.';
-            $location = 'Portland, OR';
-            $id = '1';
-            $test_event = new Event ($user_id, $name, $date_time, $description, $location, $id);
-
-            $test_event->setName('Sock Puppet Annual Event');
-            $test_event->setDescription('Soft core puppet enthusiasts -- no weird stuff.');
-            $test_event->setLocation('Gresham, OR');
-
-            $result = array($test_event->getName(), $test_event->getDescription(), $test_event->getLocation());
-            $expected_result = array('Sock Puppet Annual Event', 'Soft core puppet enthusiasts -- no weird stuff.', 'Gresham, OR');
-            $this->assertEquals($result, $expected_result);
-        }
-
         function test_save()
         {
             $user_id = '1';
@@ -212,6 +178,29 @@
             $this->assertEquals([$test_event2], $result);
         }
 
+        function test_findByKey()
+        {
+            $user_id = '1';
+            $name = 'Sock Puppet Convention';
+            $date_time = '2017-10-10 13:30:00';
+            $description = 'Soft core puppet enthusiasts.';
+            $location = 'Portland, OR';
+            $test_event = new Event ($user_id, $name, $date_time, $description, $location);
+            $test_event->save();
+
+            $user_id2 = '2';
+            $name2 = 'Sausage Convention';
+            $date_time2 = '2017-12-10 13:30:00';
+            $description2 = 'For CULINARY sausage enthusiasts.';
+            $location2 = 'Portland, OR';
+            $test_event2 = new Event ($user_id2, $name2, $date_time2, $description2, $location2);
+            $test_event2->save();
+            $guest_key = $test_event->getGuestKey();
+            $result = Event::findByKey($guest_key);
+
+            $this->assertEquals($test_event, $result);
+
+        }
     }
 
 ?>
