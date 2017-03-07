@@ -114,6 +114,5 @@
             $this->assertEquals([$new_user2], $result);
         }
     }
->>>>>>> upstream/master
 
 ?>

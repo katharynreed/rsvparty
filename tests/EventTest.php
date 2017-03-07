@@ -25,9 +25,10 @@
             $description = 'Soft core puppet enthusiasts.';
             $location = 'Portland, OR';
             $id = '1';
-            $test_event = new Event ($user_id, $name, $date_time, $description, $location, $id);
+            $test_event = new Event ($user_id, $name, $date_time, $description, $location, $guest_key, $id);
 
             $result = array($test_event->getUserId(), $test_event->getName(), $test_event->getDateTime(), $test_event->getDescription(), $test_event->getLocation(), $test_event->getId());
+            $test_event->getGuestKey();
             $expected_result = array('1','Sock Puppet Convention', '2017-10-10 13:30:00', 'Soft core puppet enthusiasts.', 'Portland, OR', '1');
             $this->assertEquals($result, $expected_result);
         }

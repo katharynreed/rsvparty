@@ -26,15 +26,15 @@ _{Are there issues that have not yet been resolved that you want to let users kn
 
 CREATE DATABASE rsvparty_test;
 USE rsvparty_test;
-CREATE TABLE users (id serial PRIMARY KEY, name VARCHAR (255), password VARCHAR (255), guest_key VARCHAR (255));
-CREATE TABLE events (id serial PRIMARY KEY, user_id INT, name VARCHAR (255), date_time DATETIME, description VARCHAR (255), location VARCHAR (255));
+CREATE TABLE users (id serial PRIMARY KEY, name VARCHAR (255), password VARCHAR (255));
+CREATE TABLE events (id serial PRIMARY KEY, user_id INT, name VARCHAR (255), date_time DATETIME, description VARCHAR (255), location VARCHAR (255), guest_key VARCHAR (255));
 CREATE TABLE tasks (id serial PRIMARY KEY, name VARCHAR (255), description VARCHAR (255), event_id INT);
 CREATE TABLE attendees (id serial PRIMARY KEY, name VARCHAR (255), event_id INT);
 CREATE TABLE attendees_tasks (id serial PRIMARY KEY, attendee_id INT, task_id INT);
 CREATE DATABASE rsvparty;
 USE rsvparty;
-CREATE TABLE users (id serial PRIMARY KEY, name VARCHAR (255), password VARCHAR (255), guest_key VARCHAR (255));
-CREATE TABLE events (id serial PRIMARY KEY, user_id INT, name VARCHAR (255), date_time DATETIME, description VARCHAR (255), location VARCHAR (255));
+CREATE TABLE users (id serial PRIMARY KEY, name VARCHAR (255), password VARCHAR (255));
+CREATE TABLE events (id serial PRIMARY KEY, user_id INT, name VARCHAR (255), date_time DATETIME, description VARCHAR (255), location VARCHAR (255), guest_key VARCHAR (255));
 CREATE TABLE tasks (id serial PRIMARY KEY, name VARCHAR (255), description VARCHAR (255), event_id INT);
 CREATE TABLE attendees (id serial PRIMARY KEY, name VARCHAR (255), event_id INT);
 CREATE TABLE attendees_tasks (id serial PRIMARY KEY, attendee_id INT, task_id INT);
