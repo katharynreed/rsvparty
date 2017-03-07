@@ -19,8 +19,22 @@
     $DB = new PDO($server, $username, $password);
 
     $app->get('/', function() use($app) {
+        $user_id = "5";
         $result = 'hello';
-        return $app["twig"]->render("root.html.twig", ['result' => $result]);
+        $name = "Birthday Partay";
+        $date_time = "2017-03-24 00:00:00";
+        $description = "A regular birthday party";
+        $location = "9759 SW Lynwood Terrace Portland OR";
+        $event = new Event($user_id, $name, $date_time, $description, $location);
+        $key = 'AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM';
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($location)."&key=AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM";
+
+        $lat_long = json_decode(file_get_contents($url));
+
+        $lat = $lat_long->results[0]->geometry->location->lat;
+        $long = $lat_long->results[0]->geometry->location->lng;
+
+        return $app['twig']->render('root.html.twig', ['attendees' => $attendees, 'event' => $event, 'name' => $name, 'description' => $description, 'location' => $location, 'lat' => $lat, 'long' => $long, 'key' => $key]);
     });
 
     $app->get('/event_creator/{id}', function($id) use($app) {
@@ -41,8 +55,13 @@
 
     $app->get('/event_page/{id}', function($id) use ($app) {
         $attendees = Attendee::getAll();
-        $event = Event::find($id);
-        return $app['twig']->render('event_page.html.twig', ['attendees' => $attendees, 'event' => $events]);
+        // $event = Event::find($id);
+        $name = "Birthday Partay";
+        $date_time = "2017-03-24 00:00:00";
+        $description = "A regular birthday party";
+        $location = "9759 SW Lynwood Terrace Portland OR";
+        $event = new Event($name, $date_time, $description, $location);
+        return $app['twig']->render('event_page.html.twig', ['attendees' => $attendees, 'event' => $event, 'name' => $name, 'description' => $description, 'location' => $location]);
     });
 
     $app->patch('/event_page/editname/{id}', function($id) use ($app) {
