@@ -16,8 +16,10 @@
     class TaskTest extends PHPUnit_Framework_TestCase
     {
         protected function tearDown() {
-            Task::deleteAll();
+            Event::deleteAll();
             Attendee::deleteAll();
+            Task::deleteAll();
+            User::deleteAll();
         }
 
         function test_save() {
