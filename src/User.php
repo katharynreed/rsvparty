@@ -66,6 +66,11 @@
             }
         }
 
+        function logOut()
+        {
+            $_SESSION['user'] = [];
+        }
+
         function save()
         {
             $save = $GLOBALS['DB']->prepare("INSERT INTO users (name, password, guest_key) VALUES (:name, :password, :guest_key);");
