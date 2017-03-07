@@ -23,6 +23,11 @@
         return $app["twig"]->render("root.html.twig", ['result' => $result]);
     });
 
+    $app->get('/error', function() use($app) {
+        $result = 'hello';
+        return $app["twig"]->render("error.html.twig", ['result' => $result]);
+    });
+
     $app->get('/event_creator/{id}', function($id) use($app) {
         $user = User::find($id);
         return $app['twig']->render('create_event.html.twig', ['user' => $user]);
