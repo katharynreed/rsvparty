@@ -17,6 +17,7 @@
 
     use Symfony\Component\HttpFoundation\Request;
     Request::enableHttpMethodParameterOverride();
+
     $app['debug'] = true;
 
     $server = 'mysql:host=localhost:8889;dbname=rsvparty';
@@ -35,7 +36,7 @@
             $response = $user->logIn($_POST['password']);
             return json_encode($response);
         } else {
-            return json_encode("not a user");
+            return json_encode("username");
         }
     });
 

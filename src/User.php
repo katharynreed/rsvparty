@@ -40,9 +40,9 @@
         {
             if ($password == $this->getPassword()) {
                 $_SESSION['user'] = $this;
-                return "success";
+                return ['name' => $this->getName(), 'id' => $this->getId()];
             } else {
-                return "failure";
+                return "password";
             }
         }
 
@@ -82,7 +82,11 @@
         {
             $returned_user = $GLOBALS['DB']->query("SELECT * FROM users WHERE name = '{$name}';");
             $user = $returned_user->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'User', ['name', 'password', 'id']);
-            return $user[0];
+            if ($user) {
+                return $user[0];
+            } else {
+                return [];
+            }
         }
 
         static function getAll()

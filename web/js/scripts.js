@@ -5,10 +5,13 @@ $(function() {
     var password = $("#password").val();
 
     $.post('/login', { username: username, password: password}, function(response) {
-      if (response === 'success') {
-        alert(response);
+      console.log(response);
+      response = jQuery.parseJSON(response);
+      if (response !== 'password' && response !== 'username') {
+        $("#nav-login").html("<small class='text-muted'>Now signed in as <a href='/user/" + response['id'] + "'>" + response['name'] + "</small>");
       } else {
-        alert(response);
+        $("#nav-login").addClass("has-danger");
+        $("#error-text").text("That's not a valid " + response + ". Try again.");
       }
     });
   });
