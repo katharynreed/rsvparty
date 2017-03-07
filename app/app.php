@@ -29,6 +29,16 @@
         return $app["twig"]->render("root.html.twig", ['result' => $result]);
     });
 
+    $app->post('/login', function() {
+        $user = User::findByUsername($_POST['username']);
+        if ($user) {
+            $response = $user->logIn($_POST['password']);
+            return json_encode($response);
+        } else {
+            return json_encode("not a user");
+        }
+    });
+
     $app->get('/event_creator/{id}', function($id) use($app) {
         $user = User::find($id);
         return $app['twig']->render('create_event.html.twig', ['user' => $user]);

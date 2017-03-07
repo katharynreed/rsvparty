@@ -40,6 +40,9 @@
         {
             if ($password == $this->getPassword()) {
                 $_SESSION['user'] = $this;
+                return "success";
+            } else {
+                return "failure";
             }
         }
 
@@ -71,6 +74,13 @@
         static function find($id)
         {
             $returned_user = $GLOBALS['DB']->query("SELECT * FROM users WHERE id = {$id};");
+            $user = $returned_user->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'User', ['name', 'password', 'id']);
+            return $user[0];
+        }
+
+        static function findByUsername($name)
+        {
+            $returned_user = $GLOBALS['DB']->query("SELECT * FROM users WHERE name = '{$name}';");
             $user = $returned_user->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'User', ['name', 'password', 'id']);
             return $user[0];
         }
