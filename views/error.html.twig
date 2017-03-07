@@ -22,20 +22,13 @@
                 </form>
             </div>
 
-            <div id="logotron">
-                <img id="logo" src="/../img/rsvpartylogo.png" alt="fun stuff">
+            <div id="error-container">
+                <img id="error-img" src="/../img/error.png" alt="error message">
             </div>
         </div>
         <div class="container">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="page-header">
-                        {% block content %}
-                        {% endblock %}
-                    </div>
-                    {% block link %}
-                    {% endblock %}
-                </div>
+            <div id="error-container">
+                <p>you goofed up</p>
             </div>
         </div>
     </body>
