@@ -2,31 +2,13 @@
     class User {
         private $name;
         private $password;
-        private $guest_key;
         private $id;
 
-        function __construct($name, $password, $guest_key = null, $id = null)
+        function __construct($name, $password, $id = null)
         {
             $this->name = $name;
             $this->password = $password;
             $this->id = $id;
-            if ($guest_key == null) {
-                $this->generateKey();
-            } else {
-                $this->guest_key = $guest_key;
-            }
-        }
-
-        protected function generateKey()
-        {
-            $alph = "0123456789abcdefghijklmnopqrstuvwxyz";
-            $key = $alph[mt_rand(0, 35)] . $alph[mt_rand(0, 35)] . $alph[mt_rand(0, 35)] . $alph[mt_rand(0, 35)] . $alph[mt_rand(0, 35)];
-            $test = $GLOBALS['DB']->query("SELECT * FROM users WHERE guest_key = {$key};");
-            if ($test) {
-                $this->generateKey();
-            } else {
-                $this->guest_key = $key;
-            }
         }
 
         function setName($name)
@@ -49,11 +31,6 @@
             return $this->password;
         }
 
-        function getGuestKey()
-        {
-            return $this->guest_key;
-        }
-
         function getId()
         {
             return $this->id;
@@ -73,8 +50,8 @@
 
         function save()
         {
-            $save = $GLOBALS['DB']->prepare("INSERT INTO users (name, password, guest_key) VALUES (:name, :password, :guest_key);");
-            $save->execute([':name' => $this->getName(), ':password' => $this->getPassword(), ':guest_key' => $this->getGuestKey()]);
+            $save = $GLOBALS['DB']->prepare("INSERT INTO users (name, password) VALUES (:name, :password);");
+            $save->execute([':name' => $this->getName(), ':password' => $this->getPassword()]);
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
@@ -94,7 +71,7 @@
         static function find($id)
         {
             $returned_user = $GLOBALS['DB']->query("SELECT * FROM users WHERE id = {$id};");
-            $user = $returned_user->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'User', ['name', 'password', 'guest_key', 'id']);
+            $user = $returned_user->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'User', ['name', 'password', 'id']);
             return $user[0];
         }
 
@@ -102,7 +79,7 @@
         {
             $returned_users = $GLOBALS['DB']->query("SELECT * FROM users;");
             if ($returned_users) {
-                $users = $returned_users->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'User', ['name', 'password', 'guest_key', 'id']);
+                $users = $returned_users->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'User', ['name', 'password', 'id']);
             } else {
                 $users = [];
             }
