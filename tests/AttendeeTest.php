@@ -18,8 +18,10 @@
 
         protected function tearDown()
         {
+            Event::deleteAll();
             Attendee::deleteAll();
             Task::deleteAll();
+            User::deleteAll();
         }
 
         function test_save()
@@ -29,6 +31,7 @@
             $test_attendee = new Attendee($name, $event_id);
 
             $test_attendee->save();
+
             $result = Attendee::getAll();
 
             $this->assertEquals($test_attendee, $result[0]);
@@ -81,6 +84,20 @@
             $result = Attendee::getAll();
 
             $this->assertEquals($new_name, $result[0]->getName());
+        }
+
+        function test_updateRsvp()
+        {
+            $name = 'Geoff';
+            $event_id = '2';
+            $test_attendee = new Attendee($name, $event_id);
+            $test_attendee->save();
+
+            $new_rsvp = 1;
+            $test_attendee->updateRsvp($new_rsvp);
+            $result = Attendee::getAll();
+
+            $this->assertEquals($new_rsvp, $result[0]->getRsvp());
         }
 
         function test_delete()
