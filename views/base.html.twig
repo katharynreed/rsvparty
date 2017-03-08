@@ -18,10 +18,10 @@
                 <ul class="nav-ul">
                   <li class="nav-li"><a href="/">Home</a></li>
                   <li class="nav-li"><a href="#">About</a></li>
-                  <li class="nav-li"><a href="#">Contact</a></li>
+                  <li class="nav-li"><a href="/event_creator/{{session['user'].getId}}">Create event</a></li>
                 </ul>
 
-            {% if user is empty%}
+            {% if session['user'] is empty%}
                 <div id="nav-login" class="nav-login">
                   <input id="username" type="text" name="username" placeholder="username" required>
                   <input id="password" type="password" name="password" placeholder="password" required>
@@ -29,7 +29,7 @@
                   <small id="error-text"><small> <!--error message goes here-->
                 </div>
             {% else %}
-                <small class='text-muted'>Now signed in as <a href='/user/{{user.getId}}'> {{user.getName}} </a></small>
+                <small class='text-muted'>Now signed in as <a href="/user/{{session['user'].getId}}"> {{session['user'].getName}} </a></small>
             {% endif %}
             </div>
 

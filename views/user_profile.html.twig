@@ -2,6 +2,7 @@
 {% block content%}
 
 <h2>{{ user.getName }}</h2>
+
 <h4>Update account information:</h4>
 <form class="" action="/user/{{user.getId}}/edit" method="post">
     <input type="hidden" name="_method" value="patch">
@@ -21,5 +22,9 @@
 
         <a href="/event/{{ event.getId }}"><li>{{event.getName}}</li></a>
         {% endfor %}
+    {% else %}
+    <p>
+        <h1>butts</h1> 
+    </p>
     {% endif %}
 {% endblock %}

@@ -27,7 +27,7 @@
 
     $app->get('/', function() use($app) {
 
-    return $app['twig']->render('root.html.twig', ['user' => $_SESSION['user']]);
+    return $app['twig']->render('root.html.twig', ['session' => $_SESSION]);
     });
 
     $app->get('/error', function() use($app) {
@@ -37,8 +37,8 @@
 
     $app->get('/user/{id}', function($id) use($app) {
         $user = User::find($id);
-        $events = $user->getEvents($id);
-        return $app['twig']->render("user_profile.html.twig", ['user' => $user, 'events' => $events]);
+        $events = $user->getEvents();
+        return $app['twig']->render("user_profile.html.twig", ['user' => $user, 'events' => $events, 'session' => $_SESSION]);
     });
 
     $app->post('/login', function() {
@@ -53,7 +53,7 @@
 
     $app->get('/event_creator/{id}', function($id) use($app) {
         $user = User::find($id);
-        return $app['twig']->render('create_event.html.twig', ['user' => $user]);
+        return $app['twig']->render('create_event.html.twig', ['user' => $user, 'session' => $_SESSION]);
     });
 
     $app->post('/create_event', function() use ($app) {
@@ -72,15 +72,15 @@
 
         $attendees = Attendee::getAll();
         $event = Event::find($id);
+        $user_id = $event->getUserId();
         $users = User::getAll();
-        $user = $event->getUserId();
         $key = 'AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM';
         $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($event->getLocation())."&key=AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM";
 
         $lat_long = json_decode(file_get_contents($url));
         $lat = $lat_long->results[0]->geometry->location->lat;
         $long = $lat_long->results[0]->geometry->location->lng;
-        return $app['twig']->render('event_page.html.twig', ['attendees' => $attendees, 'event' => $event, 'user'=>$user, 'users'=>$users, 'lat' => $lat, 'long' => $long, 'key' => $key, 'session' => $_SESSION]);
+        return $app['twig']->render('event_page.html.twig', ['attendees' => $attendees, 'event' => $event, 'users'=>$users, 'lat' => $lat, 'long' => $long, 'key' => $key, 'session' => $_SESSION]);
         });
 
     $app->patch('/event_page/{id}/editdate_time', function($id) use ($app) {
@@ -114,7 +114,7 @@
         $lat_long = json_decode(file_get_contents($url));
         $lat = $lat_long->results[0]->geometry->location->lat;
         $long = $lat_long->results[0]->geometry->location->lng;
-        return $app['twig']->render('event_page_guest.html.twig', ['attendees' => $attendees, 'event' => $event, 'lat' => $lat, 'long' => $long, 'key' => $key]);
+        return $app['twig']->render('event_page_guest.html.twig', ['attendees' => $attendees, 'event' => $event, 'lat' => $lat, 'long' => $long, 'key' => $key, 'session' => $_SESSION]);
         });
 
     $app->patch('/event_page/editname/{id}', function($id) use ($app) {
