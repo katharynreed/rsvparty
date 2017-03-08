@@ -27,12 +27,18 @@
 
     $app->get('/', function() use($app) {
 
-    return $app['twig']->render('root.html.twig');
+    return $app['twig']->render('root.html.twig', ['user' => $_SESSION['user']]);
     });
 
     $app->get('/error', function() use($app) {
         $result = 'hello';
         return $app["twig"]->render("error.html.twig", ['result' => $result]);
+    });
+
+    $app->get('/user/{id}', function($id) use($app) {
+        $user = User::find($id);
+        $events = $user->getEvents($id);
+        return $app['twig']->render("user_profile.html.twig", ['user' => $user, 'events' => $events]);
     });
 
     $app->post('/login', function() {
@@ -74,7 +80,7 @@
         $lat_long = json_decode(file_get_contents($url));
         $lat = $lat_long->results[0]->geometry->location->lat;
         $long = $lat_long->results[0]->geometry->location->lng;
-        return $app['twig']->render('event_page.html.twig', ['attendees' => $attendees, 'event' => $event, 'user'=>$user, 'users'=>$users, 'lat' => $lat, 'long' => $long, 'key' => $key]);
+        return $app['twig']->render('event_page.html.twig', ['attendees' => $attendees, 'event' => $event, 'user'=>$user, 'users'=>$users, 'lat' => $lat, 'long' => $long, 'key' => $key, 'session' => $_SESSION]);
         });
 
     $app->patch('/event_page/{id}/editdate_time', function($id) use ($app) {
