@@ -51,6 +51,12 @@
         }
     });
 
+    $app->post('/sign_out/{id}', function ($id) use ($app) {
+        $user = User::find($id);
+        $user->logOut();
+        return $app->redirect('/');
+    });
+
     $app->get('/event_creator/{id}', function($id) use($app) {
         $user = User::find($id);
         return $app['twig']->render('create_event.html.twig', ['user' => $user, 'session' => $_SESSION]);
@@ -146,7 +152,7 @@
     });
 
     $app->get('/sign-up', function() use ($app) {
-        return $app['twig']->render('sign_up.html.twig', ['user' => $_SESSION['user']]);
+        return $app['twig']->render('sign_up.html.twig', ['session' => $_SESSION]);
     });
 
     $app->post("/create_account", function() use ($app) {

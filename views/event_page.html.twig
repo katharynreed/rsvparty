@@ -2,7 +2,7 @@
 {% block content%}
 
         <h2>{{event.getName}}</h2>
-            {% for user in user%}
+            {% for user in users%}
                 {% if event.getUserId is same as(user.getId) %}
                     <h3>Your host is {{user.getName}}.</h3>
                 {%endif%}

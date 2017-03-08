@@ -20,11 +20,11 @@
     {% if events is not empty %}
         {% for event in events %}
 
-        <a href="/event/{{ event.getId }}"><li>{{event.getName}}</li></a>
+        <a href="/event_page/{{ event.getId }}"><li>{{event.getName}}</li></a>
         {% endfor %}
     {% else %}
     <p>
-        <h1>butts</h1> 
+        <h1>butts</h1>
     </p>
     {% endif %}
 {% endblock %}
