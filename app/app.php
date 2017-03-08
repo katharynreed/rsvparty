@@ -41,7 +41,7 @@
         $location = $_POST['location'];
         $new_event = new Event ($user_id, $name, $date_time, $description, $location);
         $new_event->save();
-        return $app->redirect('');
+        return $app->redirect('/');
     });
 
     $app->get('/event_page/{id}', function($id) use ($app) {

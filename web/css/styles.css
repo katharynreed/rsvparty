@@ -3,10 +3,16 @@ body {
     background-image: url(/../img/rsvpartybackground.png);
     background-repeat: no-repeat;
     background-size: 150vw;
+    background-attachment: fixed;
+    font-family: 'Istok Web', sans-serif;
 }
 
 a {
     color: #3DC7EA;
+}
+
+#error-msg {
+    padding-bottom: : -5px;
 }
 
 #error-container {
@@ -26,9 +32,22 @@ a {
     text-align: center;
 }
 
+.btn-top {
+	border: 2px solid #86DCEF;
+	color: #3DC7EA;
+}
+
+.btn-top:hover {
+    color: #FCB2CD;
+}
+
+.contentbox {
+    margin-top: 10px;
+}
+
 
 .btn {
-    background-color: #86DCEF;
+    background: none;
 }
 
 .navbar {

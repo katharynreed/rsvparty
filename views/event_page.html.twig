@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+{% block content%}
+    {%for event in events%}
+        <h2>{{event.getName}}</h2>
+            {% for user in users%}
+                {% if event.getUserId is same as(user.getId) %}
+                    <h3>{{user.getName}}</h3>
+                {%endif%}
+            {%endfor%}
+        <h4>{{event.getDateTime}}</h4>
+{% endblock %}
