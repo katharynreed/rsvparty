@@ -27,8 +27,9 @@
         function test_save()
         {
             $name = 'Geoff';
+            $email = 'geoff@email.biz';
             $event_id = '2';
-            $test_attendee = new Attendee($name, $event_id);
+            $test_attendee = new Attendee($name, $email, $event_id);
 
             $test_attendee->save();
 
@@ -40,13 +41,15 @@
         function test_getAll()
         {
             $name = 'Geoff';
+            $email = 'geoff@email.biz';
             $event_id = '2';
-            $test_attendee = new Attendee($name, $event_id);
+            $test_attendee = new Attendee($name, $email, $event_id);
             $test_attendee->save();
 
             $name = 'Dave';
+            $email = 'dave@email.co.au';
             $event_id = '4';
-            $test_attendee2 = new Attendee($name, $event_id);
+            $test_attendee2 = new Attendee($name, $email, $event_id);
             $test_attendee2->save();
 
             $result = Attendee::getAll();
@@ -57,13 +60,15 @@
         function test_deleteAll()
         {
             $name = 'Geoff';
+            $email = 'geoff@email.biz';
             $event_id = '2';
-            $test_attendee = new Attendee($name, $event_id);
+            $test_attendee = new Attendee($name, $email, $event_id);
             $test_attendee->save();
 
             $name = 'Dave';
+            $email = 'dave@email.co.au';
             $event_id = '4';
-            $test_attendee2 = new Attendee($name, $event_id);
+            $test_attendee2 = new Attendee($name, $email, $event_id);
             $test_attendee2->save();
 
             Attendee::deleteAll();
@@ -75,8 +80,9 @@
         function test_update()
         {
             $name = 'Geoff';
+            $email = 'geoff@email.biz';
             $event_id = '2';
-            $test_attendee = new Attendee($name, $event_id);
+            $test_attendee = new Attendee($name, $email, $event_id);
             $test_attendee->save();
 
             $new_name = 'Tim';
@@ -89,8 +95,9 @@
         function test_updateRsvp()
         {
             $name = 'Geoff';
+            $email = 'geoff@email.biz';
             $event_id = '2';
-            $test_attendee = new Attendee($name, $event_id);
+            $test_attendee = new Attendee($name, $email, $event_id);
             $test_attendee->save();
 
             $new_rsvp = 1;
@@ -103,13 +110,15 @@
         function test_delete()
         {
             $name = 'Geoff';
+            $email = 'geoff@email.biz';
             $event_id = '2';
-            $test_attendee = new Attendee($name, $event_id);
+            $test_attendee = new Attendee($name, $email, $event_id);
             $test_attendee->save();
 
             $name = 'Dave';
+            $email = 'dave@email.co.au';
             $event_id = '4';
-            $test_attendee2 = new Attendee($name, $event_id);
+            $test_attendee2 = new Attendee($name, $email, $event_id);
             $test_attendee2->save();
 
             $test_attendee->delete();
@@ -121,8 +130,9 @@
         function test_addTask()
         {
             $name = 'Geoff';
+            $email = 'geoff@email.biz';
             $event_id = '2';
-            $test_attendee = new Attendee($name, $event_id);
+            $test_attendee = new Attendee($name, $email, $event_id);
             $test_attendee->save();
 
             $name = 'task';
@@ -140,8 +150,9 @@
         function test_getTasks()
         {
             $name = 'Geoff';
+            $email = 'geoff@email.biz';
             $event_id = '2';
-            $test_attendee = new Attendee($name, $event_id);
+            $test_attendee = new Attendee($name, $email, $event_id);
             $test_attendee->save();
 
             $name = 'task';

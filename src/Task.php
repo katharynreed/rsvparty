@@ -76,7 +76,7 @@
         {
             $returned_attendees = $GLOBALS['DB']->query("SELECT attendees.* FROM tasks JOIN attendees_tasks ON (attendees_tasks.task_id = tasks.id) JOIN attendees ON (attendees.id = attendees_tasks.attendee_id) WHERE tasks.id = {$this->getId()};");
 
-            $attendees = $returned_attendees->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Attendee', ['name', 'event_id', 'id']);
+            $attendees = $returned_attendees->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Attendee', ['name', 'email', 'event_id', 'rsvp', 'id']);
             return $attendees;
         }
 
