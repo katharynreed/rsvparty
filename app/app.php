@@ -6,11 +6,18 @@
     require_once __DIR__."/../src/Task.php";
     require_once __DIR__."/../src/User.php";
 
+    session_start();
+    if (empty($_SESSION['user'])) {
+        $_SESSION['user'] = [];
+        $_SESSION['attendee'] = [];
+    }
+
     $app = new Silex\Application();
     $app->register(new Silex\Provider\TwigServiceProvider(), ["twig.path" => __DIR__."/../views"]);
 
     use Symfony\Component\HttpFoundation\Request;
     Request::enableHttpMethodParameterOverride();
+
     $app['debug'] = true;
 
     $server = 'mysql:host=localhost:8889;dbname=rsvparty';
@@ -19,13 +26,23 @@
     $DB = new PDO($server, $username, $password);
 
     $app->get('/', function() use($app) {
-        $result = 'hello';
-        return $app["twig"]->render("root.html.twig", ['result' => $result]);
+
+    return $app['twig']->render('root.html.twig');
     });
 
     $app->get('/error', function() use($app) {
         $result = 'hello';
         return $app["twig"]->render("error.html.twig", ['result' => $result]);
+    });
+
+    $app->post('/login', function() {
+        $user = User::findByUsername($_POST['username']);
+        if ($user) {
+            $response = $user->logIn($_POST['password']);
+            return json_encode($response);
+        } else {
+            return json_encode("username");
+        }
     });
 
     $app->get('/event_creator/{id}', function($id) use($app) {
@@ -47,7 +64,14 @@
     $app->get('/event_page/{id}', function($id) use ($app) {
         $attendees = Attendee::getAll();
         $event = Event::find($id);
-        return $app['twig']->render('event_page.html.twig', ['attendees' => $attendees, 'event' => $events]);
+        $key = 'AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM';
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($event->getLocation())."&key=AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM";
+
+        $lat_long = json_decode(file_get_contents($url));
+        $lat = $lat_long->results[0]->geometry->location->lat;
+        $long = $lat_long->results[0]->geometry->location->lng;
+
+        return $app['twig']->render('event_page.html.twig', ['attendees' => $attendees, 'event' => $event, 'lat' => $lat, 'long' => $long, 'key' => $key]);
     });
 
     $app->patch('/event_page/editname/{id}', function($id) use ($app) {
