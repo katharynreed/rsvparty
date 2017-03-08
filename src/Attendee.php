@@ -6,12 +6,14 @@
 
         private $name;
         private $event_id;
+        private $rsvp;
         private $id;
 
-        function __construct($name, $event_id, $id = null)
+        function __construct($name, $event_id, $rsvp = 0, $id = null)
         {
             $this->name = $name;
             $this->event_id = $event_id;
+            $this->rsvp = $rsvp;
             $this->id = $id;
         }
 
@@ -30,6 +32,16 @@
             return $this->event_id;
         }
 
+        function setRsvp($rsvp)
+        {
+            $this->rsvp = $rsvp;
+        }
+
+        function getRsvp()
+        {
+            return $this->rsvp;
+        }
+
         function getId()
         {
             return $this->id;
@@ -37,8 +49,8 @@
 
         function save()
         {
-            $save = $GLOBALS['DB']->prepare("INSERT INTO attendees (name, event_id) VALUES (:name, :event_id);");
-            $save->execute([':name' => $this->getName(), ':event_id' => $this->getEventId()]);
+            $save = $GLOBALS['DB']->prepare("INSERT INTO attendees (name, event_id, rsvp) VALUES (:name, :event_id, :rsvp);");
+            $save->execute([':name' => $this->getName(), ':event_id' => $this->getEventId(), ':rsvp' => $this->getRsvp()]);
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
@@ -47,6 +59,13 @@
             $this->setName($new_name);
             $update = $GLOBALS['DB']->prepare("UPDATE attendees SET name = :name WHERE id = :id;");
             $update->execute([':name' => $this->getName(), ':id' => $this->getId()]);
+        }
+
+        function updateRsvp($new_rsvp)
+        {
+            $this->setRsvp($new_rsvp);
+            $update = $GLOBALS['DB']->prepare("UPDATE attendees SET rsvp = :rsvp WHERE id = :id;");
+            $update->execute([':rsvp' => $this->getRsvp(), ':id' => $this->getId()]);
         }
 
         function delete()
@@ -66,7 +85,7 @@
                             JOIN attendees_tasks ON (attendees_tasks.attendee_id = attendees.id)
                             JOIN tasks ON (tasks.id = attendees_tasks.task_id)
                             WHERE attendees.id = {$this->getId()};");
-            $tasks = $returned_tasks->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Task', ['name', 'description', 'event_id', 'id']);
+            $tasks = $returned_tasks->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Task', ['name', 'description', 'event_id', 'rsvp', 'id']);
             return $tasks;
         }
 
@@ -74,7 +93,7 @@
         {
             $returned_attendees = $GLOBALS['DB']->query("SELECT * FROM attendees;");
             if ($returned_attendees) {
-                $attendees = $returned_attendees->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Attendee', ['name', 'event_id', 'id']);
+                $attendees = $returned_attendees->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Attendee', ['name', 'event_id', 'rsvp', 'id']);
             } else {
                 $attendees = [];
             }
