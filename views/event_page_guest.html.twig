@@ -1,14 +1,20 @@
 {% extends "base.html.twig" %}
 {% block content%}
 
-    {%for event in events%}
-        <h2>{{event.getName}}</h2>
-            {% for user in users%}
-                {% if event.getUserId is same as(user.getId) %}
-                    <h3>{{user.getName}}</h3>
-                {%endif%}
-            {%endfor%}
-        <h4>{{event.getDateTime}}</h4>
+    {% for user in users%}
+        {% if event.getUserId is same as(user.getId) %}
+        <h3>{{user.getName}}</h3>
+        {%endif%}
+    {%endfor%}
+
+    <h2>{{event.getName}}</h2>
+    <h4>{{event.getDateTime}}</h4>
+    {% if attendees is not empty %}
+        {% for attendee in attendees %}
+            <h4>{{ attendee.getName }}</h4>
+        {% endfor %}
+    {% endif %}
+
 
 
 <style>

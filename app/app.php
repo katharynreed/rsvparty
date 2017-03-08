@@ -3,7 +3,6 @@
     require_once __DIR__."/../vendor/autoload.php";
     require_once __DIR__."/../src/Attendee.php";
     require_once __DIR__."/../src/Event.php";
-    require_once __DIR__."/../src/Task.php";
     require_once __DIR__."/../src/User.php";
 
     session_start();
@@ -110,17 +109,18 @@
         return $app->redirect('/event_page/'.$id);
     });
 
-    $app->get('/event_page/{guest_key}', function($guest_key) use ($app) {
-
-        $attendees = Attendee::getAll();
+    $app->get('/event_page/guest/{guest_key}/{id}', function($guest_key, $id) use ($app) {
         $event = Event::findByKey($guest_key);
+        $attendees = Attendee::getAll();
+
+        $users = User::getAll();
         $key = 'AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM';
         $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($event->getLocation())."&key=AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM";
 
         $lat_long = json_decode(file_get_contents($url));
         $lat = $lat_long->results[0]->geometry->location->lat;
         $long = $lat_long->results[0]->geometry->location->lng;
-        return $app['twig']->render('event_page_guest.html.twig', ['attendees' => $attendees, 'event' => $event, 'lat' => $lat, 'long' => $long, 'key' => $key, 'session' => $_SESSION]);
+        return $app['twig']->render('event_page_guest.html.twig', ['attendees' => $attendees, 'event' => $event, 'lat' => $lat, 'long' => $long, 'key' => $key, 'users' => $users, 'session' => $_SESSION]);
         });
 
     $app->patch('/event_page/editname/{id}', function($id) use ($app) {

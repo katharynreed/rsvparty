@@ -1,6 +1,5 @@
 <?php
 
-    require_once 'Task.php';
 
     class Attendee {
 
@@ -83,22 +82,6 @@
         function delete()
         {
             $GLOBALS['DB']->exec("DELETE FROM attendees WHERE id = {$this->getId()};");
-            $GLOBALS['DB']->exec("DELETE FROM attendees_tasks WHERE attendee_id = {$this->getId()};");
-        }
-
-        function addTask($id)
-        {
-            $GLOBALS['DB']->exec("INSERT INTO attendees_tasks (attendee_id, task_id) VALUES ({$this->getId()}, {$id});");
-        }
-
-        function getTasks()
-        {
-            $returned_tasks = $GLOBALS['DB']->query("SELECT tasks.* FROM attendees
-                            JOIN attendees_tasks ON (attendees_tasks.attendee_id = attendees.id)
-                            JOIN tasks ON (tasks.id = attendees_tasks.task_id)
-                            WHERE attendees.id = {$this->getId()};");
-            $tasks = $returned_tasks->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Task', ['name', 'email', 'description', 'event_id', 'rsvp', 'id']);
-            return $tasks;
         }
 
         static function getAll()
@@ -115,7 +98,6 @@
         static function deleteAll()
         {
             $GLOBALS['DB']->exec("DELETE FROM attendees;");
-            $GLOBALS['DB']->exec("DELETE FROM attendees_tasks;");
         }
     }
 

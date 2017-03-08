@@ -17,7 +17,6 @@
         {
             Event::deleteAll();
             Attendee::deleteAll();
-            Task::deleteAll();
             User::deleteAll();
             $_SESSION['user'] = [];
         }
