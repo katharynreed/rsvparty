@@ -115,8 +115,9 @@
         function test_addAttendee()
         {
             $name = 'Geoff';
+            $email = 'geoff@email.biz';
             $event_id = '2';
-            $test_attendee = new Attendee($name, $event_id);
+            $test_attendee = new Attendee($name, $email, $event_id);
             $test_attendee->save();
 
             $name = 'task';
@@ -134,13 +135,15 @@
         function test_getAttendees()
         {
             $name = 'Geoff';
+            $email = 'geoff@email.biz';
             $event_id = '2';
-            $test_attendee = new Attendee($name, $event_id);
+            $test_attendee = new Attendee($name, $email, $event_id);
             $test_attendee->save();
 
-            $name = 'Joe';
-            $event_id = '5';
-            $test_attendee2 = new Attendee($name, $event_id);
+            $name = 'Dave';
+            $email = 'dave@email.co.au';
+            $event_id = '4';
+            $test_attendee2 = new Attendee($name, $email, $event_id);
             $test_attendee2->save();
 
             $name = 'task';
