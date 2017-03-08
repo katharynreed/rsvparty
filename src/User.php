@@ -51,6 +51,7 @@
         function logIn($password)
         {
             if ($password == $this->getPassword()) {
+                $_SESSION['attendee'] = [];
                 $_SESSION['user'] = $this;
                 return ['name' => $this->getName(), 'id' => $this->getId()];
             } else {
@@ -89,6 +90,26 @@
             if ($found_user != []) {
                 return true;
             } else {
+
+        function getEvents()
+        {
+            $events = [];
+            $returned_events = $GLOBALS['DB']->query("SELECT FROM events WHERE user_id = {$this->getId()};");
+            if ($returned_events) {
+                foreach($returned_events as $event) {
+                    $user_id = $event['user_id'];
+                    $name = $event['name'];
+                    $date_time = $event['date_time'];
+                    $description = $event['description'];
+                    $location = $event['location'];
+                    $guest_key = $event['guest_key'];
+                    $id = $event['id'];
+                    $new_event = new Event ($user_id, $name, $date_time, $description, $location, $guest_key, $id);
+                    array_push($events, $new_event);
+                }
+                return $events;
+            }
+            else {
                 return false;
             }
         }

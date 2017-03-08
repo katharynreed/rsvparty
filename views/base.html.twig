@@ -21,7 +21,7 @@
                   <li class="nav-li"><a href="#">Contact</a></li>
                 </ul>
 
-
+            {% if user is empty%}
                 <div id="nav-login" class="nav-login">
                   <input id="username" type="text" name="username" placeholder="username" required>
                   <input id="password" type="password" name="password" placeholder="password" required>
@@ -29,8 +29,9 @@
                   <a href="/sign-up" class="btn btn-top" role="button" name="button">Sign up</a></br>
                   <small id="error-text"><small> <!--error message goes here-->
                 </div>
-
-
+            {% else %}
+                <small class='text-muted'>Now signed in as <a href='/user/{{user.getId}}'> {{user.getName}} </a></small>
+            {% endif %}
             </div>
 
             <div id="logotron">
