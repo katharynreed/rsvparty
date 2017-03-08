@@ -73,6 +73,13 @@
             $update->execute([':name' => $this->getName(), ':id' => $this->getId()]);
         }
 
+        function updateEmail($new_email)
+        {
+            $this->setEmail($new_email);
+            $update = $GLOBALS['DB']->prepare("UPDATE attendees SET email = :email WHERE id = :id;");
+            $update->execute([':email' => $this->getEmail(), ':id' => $this->getId()]);
+        }
+
         function updateRsvp($new_rsvp)
         {
             $this->setRsvp($new_rsvp);
