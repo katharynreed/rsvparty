@@ -36,6 +36,21 @@
             return $this->id;
         }
 
+        function logIn($password)
+        {
+            if ($password == $this->getPassword()) {
+                $_SESSION['user'] = $this;
+                return ['name' => $this->getName(), 'id' => $this->getId()];
+            } else {
+                return "password";
+            }
+        }
+
+        function logOut()
+        {
+            $_SESSION['user'] = [];
+        }
+
         function save()
         {
             $save = $GLOBALS['DB']->prepare("INSERT INTO users (name, password) VALUES (:name, :password);");
@@ -61,6 +76,17 @@
             $returned_user = $GLOBALS['DB']->query("SELECT * FROM users WHERE id = {$id};");
             $user = $returned_user->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'User', ['name', 'password', 'id']);
             return $user[0];
+        }
+
+        static function findByUsername($name)
+        {
+            $returned_user = $GLOBALS['DB']->query("SELECT * FROM users WHERE name = '{$name}';");
+            $user = $returned_user->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'User', ['name', 'password', 'id']);
+            if ($user) {
+                return $user[0];
+            } else {
+                return [];
+            }
         }
 
         static function getAll()

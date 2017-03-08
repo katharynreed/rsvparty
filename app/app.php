@@ -6,11 +6,18 @@
     require_once __DIR__."/../src/Task.php";
     require_once __DIR__."/../src/User.php";
 
+    session_start();
+    if (empty($_SESSION['user'])) {
+        $_SESSION['user'] = [];
+        $_SESSION['attendee'] = [];
+    }
+
     $app = new Silex\Application();
     $app->register(new Silex\Provider\TwigServiceProvider(), ["twig.path" => __DIR__."/../views"]);
 
     use Symfony\Component\HttpFoundation\Request;
     Request::enableHttpMethodParameterOverride();
+
     $app['debug'] = true;
 
     $server = 'mysql:host=localhost:8889;dbname=rsvparty';
@@ -26,6 +33,16 @@
     $app->get('/error', function() use($app) {
         $result = 'hello';
         return $app["twig"]->render("error.html.twig", ['result' => $result]);
+    });
+
+    $app->post('/login', function() {
+        $user = User::findByUsername($_POST['username']);
+        if ($user) {
+            $response = $user->logIn($_POST['password']);
+            return json_encode($response);
+        } else {
+            return json_encode("username");
+        }
     });
 
     $app->get('/event_creator/{id}', function($id) use($app) {

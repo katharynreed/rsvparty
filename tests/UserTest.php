@@ -19,6 +19,7 @@
             Attendee::deleteAll();
             Task::deleteAll();
             User::deleteAll();
+            $_SESSION['user'] = [];
         }
 
         function test_save()
@@ -115,6 +116,49 @@
             $result = User::getAll();
 
             $this->assertEquals([$new_user2], $result);
+        }
+
+        function test_logIn_success()
+        {
+            $name = 'Bob';
+            $password = 'pass';
+            $new_user = new User($name, $password);
+            $new_user->save();
+
+            $new_user->logIn($password);
+            $result = $_SESSION['user'];
+
+            $this->assertEquals($new_user, $result);
+        }
+
+        function test_logIn_failure()
+        {
+            $name = 'Bob';
+            $password = 'pass';
+            $new_user = new User($name, $password);
+            $new_user->save();
+
+            $new_user->logIn('wrong');
+            $result = $_SESSION['user'];
+
+            $this->assertEquals([], $result);
+        }
+
+        function test_findByUsername()
+        {
+            $name = 'Bob';
+            $password = 'pass';
+            $new_user = new User($name, $password);
+            $new_user->save();
+
+            $name2 = 'Bob2';
+            $password2 = 'pass2';
+            $new_user2 = new User($name2, $password2);
+            $new_user2->save();
+
+            $result = User::findByUsername($new_user->getName());
+
+            $this->assertEquals($new_user, $result);
         }
     }
 // <<<<<<< HEAD
