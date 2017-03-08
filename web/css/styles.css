@@ -1,12 +1,36 @@
 /*base.html.twig styling*/
+body {
+    background-image: url(/../img/rsvpartybackground.png);
+    background-repeat: no-repeat;
+    background-size: 150vw;
+}
 
-.jumbotron {
+a {
+    color: #3DC7EA;
+}
+
+#error-container {
     text-align: center;
 }
 
-.jumbotron h1 {
-
+#error-img {
+    padding: 2px;
 }
+
+#logo {
+    width: 600px;
+}
+
+#logotron {
+    height: 300px;
+    text-align: center;
+}
+
+
+.btn {
+    background-color: #86DCEF;
+}
+
 .navbar {
     padding-top: 2%;
     text-align: center;

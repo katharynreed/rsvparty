@@ -15,6 +15,9 @@
     {
         protected function tearDown()
         {
+            Event::deleteAll();
+            Attendee::deleteAll();
+            Task::deleteAll();
             User::deleteAll();
             $_SESSION['user'] = [];
         }
@@ -158,5 +161,9 @@
             $this->assertEquals($new_user, $result);
         }
     }
+// <<<<<<< HEAD
+//
+// =======
+// >>>>>>> upstream/master
 
 ?>

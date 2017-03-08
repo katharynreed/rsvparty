@@ -158,8 +158,15 @@
 
         static function find($id)
         {
-            $returned_event = $GLOBALS['DB']->query("SELECT * from events WHERE id = {$id};");
+            $returned_event = $GLOBALS['DB']->query("SELECT * FROM events WHERE id = {$id};");
             $event = $returned_event->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Event', ['user_id', 'name', 'date_time', 'description', 'location', 'guest_key', 'id']);
+            return $event[0];
+        }
+
+        static function findByKey($guest_key)
+        {
+            $returned_event = $GLOBALS['DB']->query("SELECT * FROM events WHERE guest_key = '{$guest_key}';");
+            $event = $returned_event->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Event',  ['user_id', 'name', 'date_time', 'description', 'location', 'guest_key', 'id']);
             return $event[0];
         }
 
