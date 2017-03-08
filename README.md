@@ -6,7 +6,7 @@
 
 ## Description
 
-_This app allows users to create and plan events. They can then send invites to potential attendees who can RSVP and choose tasks with which they would like to help. The event page also gives users and attendees a map detailing the location of the planned event._
+_This app allows users to create and plan events. They can then send invites to potential attendees who can RSVP. The event page also gives users and attendees a map detailing the location of the planned event._
 
 ## Setup/Installation Requirements
 
@@ -29,16 +29,12 @@ CREATE DATABASE rsvparty_test;
 USE rsvparty_test;
 CREATE TABLE users (id serial PRIMARY KEY, name VARCHAR (255), password VARCHAR (255), email VARCHAR (255));
 CREATE TABLE events (id serial PRIMARY KEY, user_id INT, name VARCHAR (255), date_time DATETIME, description VARCHAR (255), location VARCHAR (255), guest_key VARCHAR (255));
-CREATE TABLE tasks (id serial PRIMARY KEY, name VARCHAR (255), description VARCHAR (255), event_id INT);
 CREATE TABLE attendees (id serial PRIMARY KEY, name VARCHAR (255), email VARCHAR (255), event_id INT, rsvp BOOLEAN);
-CREATE TABLE attendees_tasks (id serial PRIMARY KEY, attendee_id INT, task_id INT);
 CREATE DATABASE rsvparty;
 USE rsvparty;
 CREATE TABLE users (id serial PRIMARY KEY, name VARCHAR (255), password VARCHAR (255), email VARCHAR (255));
 CREATE TABLE events (id serial PRIMARY KEY, user_id INT, name VARCHAR (255), date_time DATETIME, description VARCHAR (255), location VARCHAR (255), guest_key VARCHAR (255));
-CREATE TABLE tasks (id serial PRIMARY KEY, name VARCHAR (255), description VARCHAR (255), event_id INT);
 CREATE TABLE attendees (id serial PRIMARY KEY, name VARCHAR (255), email VARCHAR (255), event_id INT, rsvp BOOLEAN);
-CREATE TABLE attendees_tasks (id serial PRIMARY KEY, attendee_id INT, task_id INT);
 
 ## Support and contact details
 
