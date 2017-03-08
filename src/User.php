@@ -90,6 +90,9 @@
             if ($found_user != []) {
                 return true;
             } else {
+                return false;
+            }
+        }
 
         function getEvents()
         {
@@ -108,9 +111,6 @@
                     array_push($events, $new_event);
                 }
                 return $events;
-            }
-            else {
-                return false;
             }
         }
 

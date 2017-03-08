@@ -146,7 +146,7 @@
     });
 
     $app->get('/sign-up', function() use ($app) {
-        return $app['twig']->render('sign_up.html.twig');
+        return $app['twig']->render('sign_up.html.twig', ['user' => $_SESSION['user']]);
     });
 
     $app->post("/create_account", function() use ($app) {
@@ -156,9 +156,9 @@
         $user_email = $_POST['user_email'];
 
         if ($user_password != $confirm_password) {
-            return $app['twig']->render('sign_up.html.twig', ['error' => 'Those passwords don\'t match']);
+            return $app['twig']->render('sign_up.html.twig', ['error' => 'Those passwords don\'t match', 'user' => $_SESSION['user']]);
         } elseif (User::alreadyExists($user_name)) {
-            return $app['twig']->render('sign_up.html.twig', ['error' => 'That username already exists.']);
+            return $app['twig']->render('sign_up.html.twig', ['error' => 'That username already exists.', 'user' => $_SESSION['user']]);
         } else {
             $new_user = new User($user_name, $user_password, $user_email);
             $new_user->save();
