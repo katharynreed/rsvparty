@@ -1,12 +1,9 @@
 {% extends "base.html.twig" %}
 {% block content%}
-
+<div class="row">
+    <div class="col col-6">
         <h2>{{event.getName}}</h2>
-            {% for user in user%}
-                {% if event.getUserId is same as(user.getId) %}
-                    <h3>Your host is {{user.getName}}.</h3>
-                {%endif%}
-            {%endfor%}
+        <h3>Your host is {{user.getName}}.</h3>
         <h4>{{event.getDateTime}}</h4>
         <blockquote>
             <form class="" action="/event_page/{{event.getId}}/editdate_time" method="post">
@@ -35,8 +32,25 @@
                 <button type="submit" name="button">edit</button>
             </form>
         </blockquote>
-
+    </div>
+    <div class="col col-6">
         <!--DO SHIT 4 MAIL HERE, MALES-->
+        <h3>Who would you like to invite?</h3>
+        <form id="attendee-form" action="/add_attendee/{{event.getId}}" class="form-group">
+            <label for="attendee-name">Name:</label>
+            <input id="attendee-name" name="attendee-name" type="text" required>
+            <label for="attendee-email">Email:</label>
+            <input id="attendee-email" name="attendee-email" type="text" required>
+            <button id="add-attendee-button">Add</button>
+        </form>
+        <ul id="attendees">
+          {% for attendee in attendees %}
+            <li id="attendee{{attendee.getId}}">{{attendee.getName}}</li>
+          {% endfor %}
+        </ul>
+        <button>Send Invites!</button>
+    </div>
+</div>
 <style>
      #map {
       height: 400px;

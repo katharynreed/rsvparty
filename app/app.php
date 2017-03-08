@@ -70,17 +70,16 @@
 
     $app->get('/event_page/{id}', function($id) use ($app) {
 
-        $attendees = Attendee::getAll();
         $event = Event::find($id);
-        $users = User::getAll();
-        $user = $event->getUserId();
+        $attendees = $event->getAttendees();
+        $user = User::find($event->getUserId());
         $key = 'AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM';
         $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($event->getLocation())."&key=AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM";
 
         $lat_long = json_decode(file_get_contents($url));
         $lat = $lat_long->results[0]->geometry->location->lat;
         $long = $lat_long->results[0]->geometry->location->lng;
-        return $app['twig']->render('event_page.html.twig', ['attendees' => $attendees, 'event' => $event, 'user'=>$user, 'users'=>$users, 'lat' => $lat, 'long' => $long, 'key' => $key, 'session' => $_SESSION]);
+        return $app['twig']->render('event_page.html.twig', ['attendees' => $attendees, 'event' => $event, 'user'=>$user, 'lat' => $lat, 'long' => $long, 'key' => $key, 'session' => $_SESSION]);
         });
 
     $app->patch('/event_page/{id}/editdate_time', function($id) use ($app) {
@@ -102,6 +101,16 @@
         $new_description = $_POST['description'];
         $event->updateDescription($new_description);
         return $app->redirect('/event_page/'.$id);
+    });
+
+    $app->post('add_attendee/{id}', function($id) use ($app) {
+        $event = Event::find($id);
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $new_attendee = new Attendee($name, $email, $id);
+        $new_attendee->save();
+        $attendees = $event->getAttendees();
+        return $app['twig']->render('attendee_list.html.twig', ['attendees' => $attendees]);
     });
 
     $app->get('/event_page/{guest_key}', function($guest_key) use ($app) {

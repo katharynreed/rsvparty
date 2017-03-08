@@ -155,6 +155,17 @@
             }
         }
 
+        function getAttendees()
+        {
+            $returned_attendees = $GLOBALS['DB']->query("SELECT * FROM attendees WHERE event_id = {$this->getId()};");
+            if ($returned_attendees) {
+                $attendees = $returned_attendees->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Attendee', ['name', 'email', 'event_id', 'rsvp', 'id']);
+            } else {
+                $attendees = [];
+            }
+            return $attendees;
+        }
+
         static function getAll()
         {
             $returned_events = $GLOBALS['DB']->query("SELECT * FROM events;");
