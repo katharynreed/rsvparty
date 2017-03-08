@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col col-6">
         <h2>{{event.getName}}</h2>
-        <h3>Your host is {{user.getName}}.</h3>
+        <h3>Your host is {{session['user'].getName}}.</h3>
         <h4>{{event.getDateTime}}</h4>
         <blockquote>
             <form class="" action="/event_page/{{event.getId}}/editdate_time" method="post">
