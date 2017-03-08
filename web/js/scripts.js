@@ -15,4 +15,14 @@ $(function() {
       }
     });
   });
+
+  // $("#sign-up button").click(function(event) {
+  //   event.preventDefault();
+  //
+  //   if ($("#user_password").val() === $("#confirm_password").val()) {
+  //     $("#sign-up").submit();
+  //   } else {
+  //     $("#password-match").html("<small>Your passwords do not match. Please re-enter and try again.</small>");
+  //   }
+  // });
 });

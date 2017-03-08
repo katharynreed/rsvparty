@@ -26,7 +26,8 @@
         {
             $name = 'Bob';
             $password = 'pass';
-            $new_user = new User($name, $password);
+            $email = 'bob@email.com';
+            $new_user = new User($name, $password, $email);
             $new_user->save();
 
             $result = User::getAll();
@@ -38,12 +39,14 @@
         {
             $name = 'Bob';
             $password = 'pass';
-            $new_user = new User($name, $password);
+            $email = 'bob@email.com';
+            $new_user = new User($name, $password, $email);
             $new_user->save();
 
             $name2 = 'Bob2';
             $password2 = 'pass2';
-            $new_user2 = new User($name2, $password2);
+            $email2 = 'bob2@email.com';
+            $new_user2 = new User($name2, $password2, $email2);
             $new_user2->save();
 
             $result = User::getAll();
@@ -55,12 +58,14 @@
         {
             $name = 'Bob';
             $password = 'pass';
-            $new_user = new User($name, $password);
+            $email = 'bob@email.com';
+            $new_user = new User($name, $password, $email);
             $new_user->save();
 
             $name2 = 'Bob2';
             $password2 = 'pass2';
-            $new_user2 = new User($name2, $password2);
+            $email2 = 'bob2@email.com';
+            $new_user2 = new User($name2, $password2, $email2);
             $new_user2->save();
 
             User::deleteAll();
@@ -73,12 +78,14 @@
         {
             $name = 'Bob';
             $password = 'pass';
-            $new_user = new User($name, $password);
+            $email = 'bob@email.com';
+            $new_user = new User($name, $password, $email);
             $new_user->save();
 
             $name2 = 'Bob2';
             $password2 = 'pass2';
-            $new_user2 = new User($name2, $password2);
+            $email2 = 'bob2@email.com';
+            $new_user2 = new User($name2, $password2, $email2);
             $new_user2->save();
 
             $result = User::find($new_user->getId());
@@ -90,7 +97,8 @@
         {
             $name = 'Bob';
             $password = 'pass';
-            $new_user = new User($name, $password);
+            $email = 'bob@email.com';
+            $new_user = new User($name, $password, $email);
             $new_user->save();
 
             $new_name = 'Dave';
@@ -104,12 +112,14 @@
         {
             $name = 'Bob';
             $password = 'pass';
-            $new_user = new User($name, $password);
+            $email = 'bob@email.com';
+            $new_user = new User($name, $password, $email);
             $new_user->save();
 
             $name2 = 'Bob2';
             $password2 = 'pass2';
-            $new_user2 = new User($name2, $password2);
+            $email2 = 'bob2@email.com';
+            $new_user2 = new User($name2, $password2, $email2);
             $new_user2->save();
 
             $new_user->delete();
@@ -122,7 +132,8 @@
         {
             $name = 'Bob';
             $password = 'pass';
-            $new_user = new User($name, $password);
+            $email = 'bob@email.com';
+            $new_user = new User($name, $password, $email);
             $new_user->save();
 
             $new_user->logIn($password);
@@ -135,7 +146,8 @@
         {
             $name = 'Bob';
             $password = 'pass';
-            $new_user = new User($name, $password);
+            $email = 'bob@email.com';
+            $new_user = new User($name, $password, $email);
             $new_user->save();
 
             $new_user->logIn('wrong');
@@ -148,12 +160,14 @@
         {
             $name = 'Bob';
             $password = 'pass';
-            $new_user = new User($name, $password);
+            $email = 'bob@email.com';
+            $new_user = new User($name, $password, $email);
             $new_user->save();
 
             $name2 = 'Bob2';
             $password2 = 'pass2';
-            $new_user2 = new User($name2, $password2);
+            $email2 = 'bob2@email.com';
+            $new_user2 = new User($name2, $password2, $email2);
             $new_user2->save();
 
             $result = User::findByUsername($new_user->getName());
