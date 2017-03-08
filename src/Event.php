@@ -133,6 +133,28 @@
             "DELETE FROM events WHERE id = {$this->getid()};");
         }
 
+        function sendInvites($attendees_array, $subject, $message, $user_email)
+        {
+            $headers = 'From: ' . $user_email . '\r\n'. 'Reply-To: ' . $user_email;
+            foreach ($attendee_array as $attendee) {
+                $message = "<!DOCTYPE html>
+                <html>
+                <head>
+                <meta charset='UTF-8'>
+                </head>
+                <body>
+                <div>
+                    <p>Hello " . $attendee->getName() . "!</p>
+                    <p>" . $message . "</p>
+                    <p>Click <a href='/event/" . $this->getGuestKey . "/" . $attendee->getId() . "'>here</a> to RSVP to the event.</p>
+                    <p>See you there!</p>
+                </div>
+                </body>
+                </html>";
+                mail($email, $subject, $message, $headers);
+            }
+        }
+
         static function getAll()
         {
             $returned_events = $GLOBALS['DB']->query("SELECT * FROM events;");

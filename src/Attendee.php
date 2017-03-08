@@ -5,13 +5,15 @@
     class Attendee {
 
         private $name;
+        private $email;
         private $event_id;
         private $rsvp;
         private $id;
 
-        function __construct($name, $event_id, $rsvp = 0, $id = null)
+        function __construct($name, $email, $event_id, $rsvp = 0, $id = null)
         {
             $this->name = $name;
+            $this->email = $email;
             $this->event_id = $event_id;
             $this->rsvp = $rsvp;
             $this->id = $id;
@@ -25,6 +27,16 @@
         function setName($new_name)
         {
             $this->name = $new_name;
+        }
+
+        function getEmail()
+        {
+            return $this->email;
+        }
+
+        function setEmail($new_email)
+        {
+            $this->email = $new_email;
         }
 
         function getEventId()
@@ -49,8 +61,8 @@
 
         function save()
         {
-            $save = $GLOBALS['DB']->prepare("INSERT INTO attendees (name, event_id, rsvp) VALUES (:name, :event_id, :rsvp);");
-            $save->execute([':name' => $this->getName(), ':event_id' => $this->getEventId(), ':rsvp' => $this->getRsvp()]);
+            $save = $GLOBALS['DB']->prepare("INSERT INTO attendees (name, email, event_id, rsvp) VALUES (:name, :email, :event_id, :rsvp);");
+            $save->execute([':name' => $this->getName(), ':email' => $this->getEmail(), ':event_id' => $this->getEventId(), ':rsvp' => $this->getRsvp()]);
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
@@ -85,7 +97,7 @@
                             JOIN attendees_tasks ON (attendees_tasks.attendee_id = attendees.id)
                             JOIN tasks ON (tasks.id = attendees_tasks.task_id)
                             WHERE attendees.id = {$this->getId()};");
-            $tasks = $returned_tasks->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Task', ['name', 'description', 'event_id', 'rsvp', 'id']);
+            $tasks = $returned_tasks->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Task', ['name', 'email', 'description', 'event_id', 'rsvp', 'id']);
             return $tasks;
         }
 
@@ -93,7 +105,7 @@
         {
             $returned_attendees = $GLOBALS['DB']->query("SELECT * FROM attendees;");
             if ($returned_attendees) {
-                $attendees = $returned_attendees->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Attendee', ['name', 'event_id', 'rsvp', 'id']);
+                $attendees = $returned_attendees->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Attendee', ['name', 'email', 'event_id', 'rsvp', 'id']);
             } else {
                 $attendees = [];
             }
