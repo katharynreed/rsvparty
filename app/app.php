@@ -88,6 +88,19 @@
         return $app['twig']->render('event_page.html.twig', ['attendees' => $attendees, 'event' => $event, 'lat' => $lat, 'long' => $long, 'key' => $key, 'session' => $_SESSION]);
         });
 
+    $app->post('/send_invites/{id}', function($id) use ($app) {
+        $event = Event::find($id);
+        $attendees = $event->getAttendees();
+        $subject = $_POST['subject-line'];
+        $message = $_POST['personal-message'];
+        $user_email = $_SESSION['user']->getEmail();
+        $event->sendInvites($attendees, $subject, $message, $user_email);
+        foreach ($attendees as $attendee) {
+            $attendee->updateEmail('sent');
+        }
+        return $app->redirect('/event_page/'.$id);
+    });
+
     $app->patch('/event_page/{id}/editdate_time', function($id) use ($app) {
         $event = Event::find($id);
         $new_date = $_POST['date'];

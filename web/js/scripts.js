@@ -24,7 +24,7 @@ $(function() {
     var action = $("#attendee-form").attr('action');
 
     $.post(action, {name: name, email: email}, function(response) {
-      $("#attendees").html(response);
+      $("#attendees-to-invite").html(response);
     });
   });
 });

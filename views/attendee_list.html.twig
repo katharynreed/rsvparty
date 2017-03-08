@@ -1,3 +1,5 @@
 {% for attendee in attendees %}
-    <li id="attendee{{attendee.getId}}">{{attendee.getName}}</li>
+    {% if attendee.getEmail != 'sent' %}
+        <li id="attendee{{attendee.getId}}">{{attendee.getName}}</li>
+    {% endif %}
 {% endfor %}

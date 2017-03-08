@@ -43,12 +43,29 @@
             <input id="attendee-email" name="attendee-email" type="text" required>
             <button id="add-attendee-button">Add</button>
         </form>
-        <ul id="attendees">
+        <h5>To Invite</h5>
+        <ul id="attendees-to-invite">
           {% for attendee in attendees %}
+            {% if attendee.getEmail != 'sent' %}
             <li id="attendee{{attendee.getId}}">{{attendee.getName}}</li>
+            {% endif %}
           {% endfor %}
         </ul>
-        <button>Send Invites!</button>
+        <form action="/send_invites/{{event.getId}}" method="post">
+            <label for="subject-line">Subject line:</label>
+            <input id="subject-line" name="subject-line" type="text" required>
+            <label for="personal-message">Personal message:</label>
+            <textarea id="personal-message" name="personal-message" rows = '4' required></textarea>
+            <button type="submit">Send Invites!</button>
+        </form>
+        <h5>Already invited:</h5>
+        <ul id="attendees-invited">
+            {% for attendee in attendees %}
+              {% if attendee.getEmail == 'sent' %}
+              <li id="attendee{{attendee.getId}}">{{attendee.getName}}</li>
+              {% endif %}
+            {% endfor %}
+        </ul>
     </div>
 </div>
 <style>
