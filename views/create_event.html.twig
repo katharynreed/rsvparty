@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 {% block content%}
-    <form class="/create_event" action="index.html" method="post">
+    <form class="/create_event" action="/create_event" method="post">
         <input class="hidden" type="hidden" name="name" value="{{user.getId}}">
         <label for="name">Event Name:</label>
         <input type="text" name="name" placeholder="Enter your event name...">
