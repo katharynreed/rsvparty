@@ -62,17 +62,53 @@
     });
 
     $app->get('/event_page/{id}', function($id) use ($app) {
+
         $attendees = Attendee::getAll();
         $event = Event::find($id);
+        $users = User::getAll();
+        $user = $event->getUserId();
         $key = 'AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM';
         $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($event->getLocation())."&key=AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM";
 
         $lat_long = json_decode(file_get_contents($url));
         $lat = $lat_long->results[0]->geometry->location->lat;
         $long = $lat_long->results[0]->geometry->location->lng;
+        return $app['twig']->render('event_page.html.twig', ['attendees' => $attendees, 'event' => $event, 'user'=>$user, 'users'=>$users, 'lat' => $lat, 'long' => $long, 'key' => $key]);
+        });
 
-        return $app['twig']->render('event_page.html.twig', ['attendees' => $attendees, 'event' => $event, 'lat' => $lat, 'long' => $long, 'key' => $key]);
+    $app->patch('/event_page/{id}/editdate_time', function($id) use ($app) {
+        $event = Event::find($id);
+        $new_date = $_POST['date'];
+        $event->updateDateTime($new_date);
+        return $app->redirect('/event_page/'.$id);
     });
+
+    $app->patch('/event_page/{id}/edit_location', function($id) use ($app) {
+        $event = Event::find($id);
+        $new_location = $_POST['location'];
+        $event->updateLocation($new_location);
+        return $app->redirect('/event_page/'.$id);
+    });
+
+    $app->patch('/event_page/{id}/edit_description', function($id) use ($app) {
+        $event = Event::find($id);
+        $new_description = $_POST['description'];
+        $event->updateDescription($new_description);
+        return $app->redirect('/event_page/'.$id);
+    });
+
+    $app->get('/event_page/{guest_key}', function($guest_key) use ($app) {
+
+        $attendees = Attendee::getAll();
+        $event = Event::findByKey($guest_key);
+        $key = 'AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM';
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($event->getLocation())."&key=AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM";
+
+        $lat_long = json_decode(file_get_contents($url));
+        $lat = $lat_long->results[0]->geometry->location->lat;
+        $long = $lat_long->results[0]->geometry->location->lng;
+        return $app['twig']->render('event_page_guest.html.twig', ['attendees' => $attendees, 'event' => $event, 'lat' => $lat, 'long' => $long, 'key' => $key]);
+        });
 
     $app->patch('/event_page/editname/{id}', function($id) use ($app) {
         $new_name = $_POST['new_name'];

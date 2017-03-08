@@ -1,16 +1,42 @@
 {% extends "base.html.twig" %}
 {% block content%}
 
-    {%for event in events%}
         <h2>{{event.getName}}</h2>
-            {% for user in users%}
+            {% for user in user%}
                 {% if event.getUserId is same as(user.getId) %}
-                    <h3>{{user.getName}}</h3>
+                    <h3>Your host is {{user.getName}}.</h3>
                 {%endif%}
             {%endfor%}
         <h4>{{event.getDateTime}}</h4>
+        <blockquote>
+            <form class="" action="/event_page/{{event.getId}}/editdate_time" method="post">
+                <input type="hidden" name="_method" value="patch">
+                <label for="date_edit">Edit date:</label>
+                <input id="date_edit" type="date" name="date" value="">
+                <button type="submit" name="button">edit</button>
+            </form>
+        </blockquote>
+        <h4>{{event.getLocation}}</h4>
+        <blockquote>
+            <form class="" action="/event_page/{{event.getId}}/edit_location" method="post">
+                <input type="hidden" name="_method" value="patch">
+                <label for="location_edit">Edit street address:</label>
+                <input id="location_edit" type="text" name="location" placeholder="Enter your new address...">
 
+                <button type="submit" name="button">edit</button>
+            </form>
+        </blockquote>
+        <h4>{{event.getDescription}}</h4>
+        <blockquote>
+            <form class="" action="/event_page/{{event.getId}}/edit_description" method="post">
+                <input type="hidden" name="_method" value="patch">
+                <label for="description_edit">Edit description:</label>
+                <input type="textarea" name="description">
+                <button type="submit" name="button">edit</button>
+            </form>
+        </blockquote>
 
+        <!--DO SHIT 4 MAIL HERE, MALES-->
 <style>
      #map {
       height: 400px;

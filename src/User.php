@@ -39,6 +39,7 @@
         function logIn($password)
         {
             if ($password == $this->getPassword()) {
+                $_SESSION['attendee'] = [];
                 $_SESSION['user'] = $this;
                 return ['name' => $this->getName(), 'id' => $this->getId()];
             } else {
