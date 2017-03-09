@@ -1,28 +1,32 @@
 {% extends "base.html.twig" %}
 {% block content%}
 
-
-    <h2>{{event.getName}} by {{user.getName}}</h2>
-    <h4>{{event.getFormattedDateTime}}</h4>
-    {% if attendees is not empty %}
+<div class="page-header">
+    <div class="center">
+        <h2>{{event.getName}} by {{user.getName}}</h2>
+        <h4>{{event.getFormattedDateTime}}</h4>
+        {% if attendees is not empty %}
         <h3>Here's who's coming!</h3>
         {% for attendee in attendees %}
-            {% if attendee.getRsvp == '1' %}
-            <h4>{{ attendee.getName }}</h4>
-            {% endif %}
+        {% if attendee.getRsvp == '1' %}
+        <h4>{{ attendee.getName }}</h4>
+        {% endif %}
         {% endfor %}
-    {% endif %}
+        {% endif %}
 
 
-    <h4>Hey, {{attendee.getName()}} RSVP for this event!</h4>
-    <form class="" action="/event_page/guest/{{event.getGuestKey()}}/{{attendee.getId()}}/rsvp" method="post">
+        <h4>Hey, {{attendee.getName()}} RSVP for this event!</h4>
+        <form class="" action="/event_page/guest/{{event.getGuestKey()}}/{{attendee.getId()}}/rsvp" method="post">
 
-        <select class="" name="rsvp">
-            <option value="1">yes</option>
-            <option value="0">no</option>
-        </select>
-        <button type="submit">rsvp</button>
-    </form>
+            <select class="form-control form-small" name="rsvp">
+                <option value="1">YES</option>
+                <option value="0">NO</option>
+            </select>
+            <button id="yn-btn" class="btn" type="submit">rsvp</button>
+        </form>
+        <h3>Event Location</h3>
+    </div>
+</div>
 
      <div id="map"></div>
 

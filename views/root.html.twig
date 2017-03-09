@@ -1,5 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/css/styles.css" type="text/css">
 
-{% extends "base.html.twig" %}
-{% block content%}
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-{% endblock %}
+        <link href="https://fonts.googleapis.com/css?family=Catamaran|Istok+Web" rel="stylesheet">
+
+        <script src='/../js/jquery-3.1.1.min.js'></script>
+        <script src='/../js/scripts.js'></script>
+    </head>
+    <body id="homepage">
+        <div class="container-fluid">
+            <div class="navbar">
+                <ul class="nav-ul">
+                  <li class="nav-li"><a href="/">Home</a></li>
+                  <li class="nav-li"><a href="/about">About</a></li>
+                  {%if session['user'] is not empty%}<li class="nav-li"><a href="/event_creator/{{session['user'].getId}}">Create event</a></li>{%endif%}
+                </ul>
+
+            {% if session['user'] is empty%}
+                <div id="nav-login" class="nav-login">
+                  <input id="username" type="text" name="username" placeholder="username" required>
+                  <input id="password" type="password" name="password" placeholder="password" required>
+                  <button id="nav-login-button" class="btn btn-top" type="submit" name="button">Sign in</button>
+                  <a href="/sign-up" class="btn btn-top" role="button" name="button">Sign up</a></br>
+                  <small id="error-text"><small> <!--error message goes here-->
+                </div>
+            {% else %}
+            <form action="/sign_out/{{session['user'].getId}}" method="post">
+                <small class='text-muted'>Now signed in as <a href="/user/{{session['user'].getId}}"> {{session['user'].getName}} </a></small>
+                    <button class="btn btn-xs btn-top" type="submit" name="button">Sign out</button>
+                </form>
+            {% endif %}
+            </div>
+            <div id="logotron">
+                <img id="logo" src="/../img/rsvpartylogo.png" alt="fun stuff">
+            </div>
+                <div id="carouselExampleIndicators" class="carousel slide center" data-ride="carousel">
+                  <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                  </ol>
+                  <div class="carousel-inner center" role="listbox">
+                    <div class="carousel-item active center">
+                      <img class="d-block img-fluid carosel-img center" src="/../img/event1.jpeg" alt="First slide">
+                
+                    </div>
+                    <div class="carousel-item center">
+                      <img class="d-block img-fluid carosel-img center" src="/../img/event2.jpeg" alt="Second slide">
+
+                      </div>
+                    <div class="carousel-item center">
+                      <img class="d-block img-fluid carosel-img center" src="/../img/event3.jpeg" alt="Third slide">
+
+                    </div>
+                  </div>
+                  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
