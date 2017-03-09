@@ -26,6 +26,7 @@ a {
 }
 
 #logo {
+    margin-top: -85px;
     width: 600px;
 }
 
@@ -43,9 +44,14 @@ a {
     color: #FCB2CD;
 }
 
+.container {
+    margin-top: -100px;
+}
+
 .contentbox {
     margin-top: 10px;
     font-size: 14px;
+
 }
 
 
