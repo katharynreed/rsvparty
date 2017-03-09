@@ -91,6 +91,12 @@
             return $this->id;
         }
 
+        function getFormattedDateTime()
+        {
+            $dt = date_create($this->getDateTime());
+            return date_format($dt, 'g:ia \o\n l jS F Y');
+        }
+
         function save()
         {
             $exec = $GLOBALS['DB']->prepare("INSERT INTO events (user_id, name, date_time, description, location, guest_key) VALUES (:user_id, :name, :date_time, :description, :location, :guest_key);");

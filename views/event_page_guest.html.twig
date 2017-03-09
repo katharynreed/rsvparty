@@ -1,22 +1,20 @@
 {% extends "base.html.twig" %}
 {% block content%}
 
-    {% for user in users%}
-        {% if event.getUserId is same as(user.getId) %}
-        <h3>{{user.getName}}</h3>
-        {%endif%}
-    {%endfor%}
 
-    <h2>{{event.getName}}</h2>
-    <h4>{{event.getDateTime}}</h4>
+    <h2>{{event.getName}} by {{user.getName}}</h2>
+    <h4>{{event.getFormattedDateTime}}</h4>
     {% if attendees is not empty %}
+        <h3>Here's who's coming!</h3>
         {% for attendee in attendees %}
+            {% if attendee.getRsvp == '1' %}
             <h4>{{ attendee.getName }}</h4>
+            {% endif %}
         {% endfor %}
     {% endif %}
 
-    <h4>RSVP for this event!</h4>
-    <form class="" action="/event_page/guest/{{event.getGuestKey}}/{{attendee.id}}/rsvp" method="post">
+    <h4>Hey, {{attendee.getName()}} RSVP for this event!</h4>
+    <form class="" action="/event_page/guest/{{event.getGuestKey()}}/{{attendee.getId()}}/rsvp" method="post">
         <select class="" name="rsvp">
             <option value="1">yes</option>
             <option value="0">no</option>
