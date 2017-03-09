@@ -134,7 +134,7 @@
     $app->get('/event_page/guest/{guest_key}/{id}', function($guest_key, $id) use ($app) {
         $event = Event::findByKey($guest_key);
         $attendees = Attendee::getAll();
-
+        $attendee = Attendee::find($id);
         $users = User::getAll();
         $key = 'AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM';
         $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($event->getLocation())."&key=AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM";
@@ -142,8 +142,26 @@
         $lat_long = json_decode(file_get_contents($url));
         $lat = $lat_long->results[0]->geometry->location->lat;
         $long = $lat_long->results[0]->geometry->location->lng;
-        return $app['twig']->render('event_page_guest.html.twig', ['attendees' => $attendees, 'event' => $event, 'lat' => $lat, 'long' => $long, 'key' => $key, 'users' => $users, 'session' => $_SESSION]);
-        });
+
+        return $app['twig']->render('event_page_guest.html.twig', ['attendees' => $attendees, 'attendee' => $attendee, 'event' => $event, 'lat' => $lat, 'long' => $long, 'key' => $key, 'users' => $users, 'session' => $_SESSION]);
+    });
+
+    $app->post('/event_page/guest/{guest_key}/{id}/rsvp', function($guest_key, $id) use ($app) {
+        $event = Event::findByKey($guest_key);
+        $attendees = Attendee::getAll();
+        $attendee = Attendee::find($id);
+        $users = User::getAll();
+        $rsvp = $_POST['rsvp'];
+        $attendee->setRsvp($rsvp);
+        $key = 'AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM';
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($event->getLocation())."&key=AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM";
+
+        $lat_long = json_decode(file_get_contents($url));
+        $lat = $lat_long->results[0]->geometry->location->lat;
+        $long = $lat_long->results[0]->geometry->location->lng;
+
+        return $app->redirect('/event_page/guest/{guest_key}/{id}');
+    });
 
     $app->patch('/event_page/editname/{id}', function($id) use ($app) {
         $new_name = $_POST['new_name'];
