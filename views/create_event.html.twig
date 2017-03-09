@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 {% block content%}
-    <form class="/create_event" action="index.html" method="post">
-        <input class="hidden" type="hidden" name="name" value="{{user.getId}}">
+    <form class="/create_event" action="/create_event" method="post">
+        <input class="hidden" type="hidden" name="user_id" value="{{user.getId}}">
         <label for="name">Event Name:</label>
         <input type="text" name="name" placeholder="Enter your event name...">
         <label for="date_time">Event Date:</label>
@@ -11,6 +11,6 @@
         <label for="location">Event Location:</label>
         <input type="location" name="location" placeholder="Where will you be meeting?">
 
-        <button type="submit" name="button"></button>
+        <button type="submit" name="button">create event</button>
     </form>
 {% endblock %}

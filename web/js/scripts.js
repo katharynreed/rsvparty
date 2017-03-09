@@ -15,4 +15,16 @@ $(function() {
       }
     });
   });
+
+  $("#add-attendee-button").click(function(event) {
+    event.preventDefault();
+
+    var name = $("#attendee-name").val();
+    var email = $("#attendee-email").val();
+    var action = $("#attendee-form").attr('action');
+
+    $.post(action, {name: name, email: email}, function(response) {
+      $("#attendees-to-invite").html(response);
+    });
+  });
 });
