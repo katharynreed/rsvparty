@@ -125,7 +125,7 @@
         return $app->redirect('/event_page/'.$id);
     });
 
-    $app->post('add_attendee/{id}', function($id) use ($app) {
+    $app->post('/add_attendee/{id}', function($id) use ($app) {
         $event = Event::find($id);
         $name = $_POST['name'];
         $email = $_POST['email'];
@@ -155,8 +155,8 @@
         $attendees = Attendee::getAll();
         $attendee = Attendee::find($id);
         $users = User::getAll();
-        $rsvp = $_POST['rsvp'];
-        $attendee->setRsvp($rsvp);
+        $new_rsvp = $_POST['rsvp'];
+        $attendee->updateRsvp($rsvp);
         $key = 'AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM';
         $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($event->getLocation())."&key=AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM";
 
