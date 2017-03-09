@@ -18,7 +18,11 @@
                 <ul class="nav-ul">
                   <li class="nav-li"><a href="/">Home</a></li>
                   <li class="nav-li"><a href="/about">About</a></li>
-                  {%if session['user'] is not empty%}<li class="nav-li"><a href="/event_creator/{{session['user'].getId}}">Create event</a></li>{%endif%}
+                  {%if session['user'] is not empty%}
+                  <li class="nav-li"><a href="/event_creator/{{session['user'].getId}}">Create event</a></li>
+                  <li class="nav-li"><a href="/user/{{session['user'].getId}}">Profile</a></li>
+                  <li class="nav-li"><a href="/user/{{session['user'].getId}}/events">Events</a></li>
+                  {%endif%}
                 </ul>
 
             {% if session['user'] is empty%}
