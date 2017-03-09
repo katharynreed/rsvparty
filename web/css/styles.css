@@ -1,9 +1,11 @@
 /*base.html.twig styling*/
 body {
-    background-image: url(/../img/rsvpartybackground.png);
+    background-image: url(/../img/rsvpartybackground2.png);
     background-repeat: no-repeat;
-    background-size: 150vw;
+    background-size: cover;
+    /*background-size: 150vw;*/
     background-attachment: fixed;
+    background-position: bottom;
     font-family: 'Istok Web', sans-serif;
 }
 
