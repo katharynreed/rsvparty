@@ -1,9 +1,11 @@
 /*base.html.twig styling*/
 body {
-    background-image: url(/../img/rsvpartybackground.png);
+    background-image: url(/../img/rsvpartybackground2.png);
     background-repeat: no-repeat;
-    background-size: 150vw;
+    background-size: cover;
+    /*background-size: 150vw;*/
     background-attachment: fixed;
+    background-position: bottom;
     font-family: 'Istok Web', sans-serif;
 }
 
@@ -24,6 +26,7 @@ a {
 }
 
 #logo {
+    margin-top: -85px;
     width: 600px;
 }
 
@@ -41,9 +44,14 @@ a {
     color: #FCB2CD;
 }
 
+.container {
+    margin-top: -100px;
+}
+
 .contentbox {
     margin-top: 10px;
     font-size: 14px;
+
 }
 
 

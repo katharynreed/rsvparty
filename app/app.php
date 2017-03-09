@@ -35,7 +35,7 @@
 
     $app->get('/error', function() use($app) {
         $result = 'hello';
-        return $app["twig"]->render("error.html.twig", ['result' => $result]);
+        return $app["twig"]->render("error.html.twig", ['result' => $result, 'session' => $_SESSION]);
     });
 
     $app->get('/user/{id}', function($id) use($app) {
