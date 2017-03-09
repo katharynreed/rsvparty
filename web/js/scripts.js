@@ -9,6 +9,7 @@ $(function() {
       response = jQuery.parseJSON(response);
       if (response !== 'password' && response !== 'username') {
         $("#nav-login").html("<small class='text-muted'>Now signed in as <a href='/user/" + response['id'] + "'>" + response['name'] + "</small>");
+        $(".nav-ul").append("<li class='nav-li'><a href=\"/event_creator/{{session['user'].getId}}\">Create event</a></li>")
       } else {
         $("#nav-login").addClass("has-danger");
         $("#error-text").text("That's not a valid " + response + ". Try again.");
