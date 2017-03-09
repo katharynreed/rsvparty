@@ -13,9 +13,17 @@ body {
     font-family: 'Istok Web', sans-serif;
 }
 
+li {
+    list-style: none;
+}
+
 textarea {
     width: 400px;
     resize: vertical;
+}
+
+ul {
+    list-style: none;
 }
 
 
@@ -23,6 +31,10 @@ textarea {
     margin-right:10%;
     margin-left: 10%;
     font-size: 20px;
+}
+
+#about-content {
+    font-family: 'Catamaran', sans-serif;
 }
 
 #edit-btn {
@@ -129,6 +141,10 @@ textarea {
     width: 400px;
 }
 
+.glyphicon {
+    color: black;
+}
+
 .navbar {
     padding-top: 2%;
     text-align: center;
@@ -149,4 +165,8 @@ textarea {
 
 .nav-login {
     display: inline-block;
+}
+
+.uppercase {
+    text-transform: uppercase;
 }

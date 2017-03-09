@@ -91,6 +91,12 @@
             return $this->id;
         }
 
+        function getFormattedDateTime()
+        {
+            $dt = date_create($this->getDateTime());
+            return date_format($dt, 'g:ia \o\n l jS F Y');
+        }
+
         function save()
         {
             $exec = $GLOBALS['DB']->prepare("INSERT INTO events (user_id, name, date_time, description, location, guest_key) VALUES (:user_id, :name, :date_time, :description, :location, :guest_key);");
@@ -131,6 +137,7 @@
         {
             $GLOBALS['DB']->exec(
             "DELETE FROM events WHERE id = {$this->getid()};");
+            $GLOBALS['DB']->exec("DELETE FROM attendees WHERE event_id = {$this->getId()};");
         }
 
         function sendInvites($attendees_array, $subject, $message, $user_email)
@@ -146,7 +153,7 @@
                 <div>
                     <p>Hello " . $attendee->getName() . "!</p>
                     <p>" . $message . "</p>
-                    <p>Click <a href='/event/" . $this->getGuestKey() . "/" . $attendee->getId() . "'>here</a> to RSVP to the event.</p>
+                    <p>Click <a href='/event_page/guest/" . $this->getGuestKey() . "/" . $attendee->getId() . "'>here</a> to RSVP to the event.</p>
                     <p>See you there!</p>
                 </div>
                 </body>
