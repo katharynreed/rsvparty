@@ -1,4 +1,8 @@
 /*base.html.twig styling*/
+a {
+    color: #3DC7EA;
+}
+
 body {
     background-image: url(/../img/rsvpartybackground2.png);
     background-repeat: no-repeat;
@@ -9,8 +13,32 @@ body {
     font-family: 'Istok Web', sans-serif;
 }
 
-a {
-    color: #3DC7EA;
+li {
+    list-style: none;
+}
+
+textarea {
+    width: 400px;
+    resize: vertical;
+}
+
+ul {
+    list-style: none;
+}
+
+
+#about-page {
+    margin-right:10%;
+    margin-left: 10%;
+    font-size: 20px;
+}
+
+#about-content {
+    font-family: 'Catamaran', sans-serif;
+}
+
+#edit-btn {
+
 }
 
 #error-msg {
@@ -25,6 +53,18 @@ a {
     padding: 2px;
 }
 
+#error-text {
+
+}
+
+#edit-btn {
+    border: 2px solid #86DCEF;
+	color: #3DC7EA;
+    position: relative;
+    top: -35px;
+    left: 410px;
+}
+
 #logo {
     margin-top: -85px;
     width: 600px;
@@ -33,6 +73,26 @@ a {
 #logotron {
     height: 300px;
     text-align: center;
+}
+
+#map {
+    margin-top: 15px;
+    height: 400px;
+    width: 100%;
+}
+
+#party-header {
+    text-align: center;
+    font-size: 40px;
+}
+
+#party-right {
+    font-style: italic;
+    color: hotpink;
+}
+
+.btn {
+    background: none;
 }
 
 .btn-top {
@@ -44,19 +104,45 @@ a {
     color: #FCB2CD;
 }
 
+.center {
+    text-align: center;
+}
+
 .container {
     margin-top: -100px;
 }
 
 .contentbox {
     margin-top: 10px;
-    font-size: 14px;
+    font-size: 17px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 30px;
 
 }
 
+.error-field {
 
-.btn {
-    background: none;
+}
+
+.edit-btn {
+    border: 2px solid #86DCEF;
+	color: #3DC7EA;
+    position: relative;
+    top: -35px;
+    left: 210px;
+}
+
+.form-control {
+    width: 200px;
+}
+
+.form-textarea-control {
+    width: 400px;
+}
+
+.glyphicon {
+    color: black;
 }
 
 .navbar {
@@ -81,10 +167,6 @@ a {
     display: inline-block;
 }
 
-.error-field {
-
-}
-
-#error-text {
-
+.uppercase {
+    text-transform: uppercase;
 }
