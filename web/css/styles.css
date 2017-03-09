@@ -50,8 +50,20 @@ a {
 
 .contentbox {
     margin-top: 10px;
+    margin-left: 10px;
     font-size: 14px;
+    margin-right: 10px;
 
+}
+
+.events-header{
+    text-align: center;
+    font-size: 50px;
+}
+
+.events-header2 {
+    text-align: center;
+    margin-top: -10px;
 }
 
 
