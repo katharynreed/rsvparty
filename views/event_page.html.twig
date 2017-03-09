@@ -117,6 +117,14 @@
               {% endif %}
             {% endfor %}
         </ul>
+        <h5>Attending:</h5>
+        <ul id="attendees-attending">
+            {% for attendee in attendees %}
+              {% if attendee.getRsvp == '1' %}
+              <li id="attendee{{attendee.getId}}">{{attendee.getName}}</li>
+              {% endif %}
+            {% endfor %}
+        </ul>
     </div>
 </div>
 <style>

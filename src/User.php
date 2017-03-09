@@ -82,6 +82,12 @@
         function delete()
         {
             $GLOBALS['DB']->exec("DELETE FROM users WHERE id = {$this->getId()};");
+            $_SESSION['user'] = '';
+            $returned_events = $GLOBALS['DB']->query("SELECT * FROM events WHERE user_id = {$this->getId()};");
+            $events = $returned_events->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Event', ['user_id','name', 'date_time', 'description', 'location', 'guest_key','id']);
+            foreach ($events as $event) {
+                $event->delete();
+            }
         }
 
         static function alreadyExists($user_name)
