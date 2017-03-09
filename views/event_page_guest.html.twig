@@ -13,23 +13,16 @@
         {% endfor %}
     {% endif %}
 
+
     <h4>Hey, {{attendee.getName()}} RSVP for this event!</h4>
     <form class="" action="/event_page/guest/{{event.getGuestKey()}}/{{attendee.getId()}}/rsvp" method="post">
+
         <select class="" name="rsvp">
             <option value="1">yes</option>
             <option value="0">no</option>
         </select>
         <button type="submit">rsvp</button>
     </form>
-
-
-
-    <style>
-         #map {
-          height: 400px;
-          width: 100%;
-         }
-      </style>
 
      <div id="map"></div>
 
