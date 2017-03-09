@@ -136,6 +136,7 @@
     });
 
     $app->get('/event_page/guest/{guest_key}/{id}', function($guest_key, $id) use ($app) {
+        $_SESSION['user'] = '';
         $event = Event::findByKey($guest_key);
         $attendees = Attendee::getAll();
         $attendee = Attendee::find($id);
@@ -191,8 +192,15 @@
         } else {
             $new_user = new User($user_name, $user_password, $user_email);
             $new_user->save();
+            $_SESSION['user'] = $new_user;
             return $app->redirect('/user/'.$new_user->getId());
         }
+    });
+
+    $app->delete('/delete_account/{id}', function($id) use ($app) {
+        $user = User::find($id);
+        $user->delete();
+        return $app->redirect('/');
     });
 
     return $app;
