@@ -106,6 +106,14 @@
         {
             $GLOBALS['DB']->exec("DELETE FROM attendees;");
         }
+
+        static function find($id)
+        {
+            $returned_attendee = $GLOBALS['DB']->query("SELECT * FROM attendees WHERE id = {$id};");
+            $attendee = $returned_attendee->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Attendee', ['name', 'email', 'event_id', 'rsvp', 'id']);
+            return $attendee[0];
+        }
+
     }
 
 ?>
