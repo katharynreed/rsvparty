@@ -106,8 +106,8 @@
 
     $app->patch('/event_page/{id}/editdate_time', function($id) use ($app) {
         $event = Event::find($id);
-        $new_date = $_POST['date'];
-        $event->updateDateTime($new_date);
+        $new_date_time = $_POST['date'] . ' ' . $_POST['time'];
+        $event->updateDateTime($new_date_time);
         return $app->redirect('/event_page/'.$id);
     });
 
@@ -139,7 +139,7 @@
         $event = Event::findByKey($guest_key);
         $attendees = Attendee::getAll();
         $attendee = Attendee::find($id);
-        $users = User::getAll();
+        $user = User::find($event->getUserId());
         $key = 'AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM';
         $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($event->getLocation())."&key=AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM";
 
@@ -147,7 +147,7 @@
         $lat = $lat_long->results[0]->geometry->location->lat;
         $long = $lat_long->results[0]->geometry->location->lng;
 
-        return $app['twig']->render('event_page_guest.html.twig', ['attendees' => $attendees, 'attendee' => $attendee, 'event' => $event, 'lat' => $lat, 'long' => $long, 'key' => $key, 'users' => $users, 'session' => $_SESSION]);
+        return $app['twig']->render('event_page_guest.html.twig', ['attendees' => $attendees, 'attendee' => $attendee, 'event' => $event, 'lat' => $lat, 'long' => $long, 'key' => $key, 'user' => $user, 'session' => $_SESSION]);
     });
 
     $app->post('/event_page/guest/{guest_key}/{id}/rsvp', function($guest_key, $id) use ($app) {
@@ -156,7 +156,7 @@
         $attendee = Attendee::find($id);
         $users = User::getAll();
         $new_rsvp = $_POST['rsvp'];
-        $attendee->updateRsvp($rsvp);
+        $attendee->updateRsvp($new_rsvp);
         $key = 'AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM';
         $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($event->getLocation())."&key=AIzaSyCxVtVkvIYvgnBsEUQ9eKpOHKPQuJOjrBM";
 
@@ -164,7 +164,7 @@
         $lat = $lat_long->results[0]->geometry->location->lat;
         $long = $lat_long->results[0]->geometry->location->lng;
 
-        return $app->redirect('/event_page/guest/{guest_key}/{id}');
+        return $app->redirect('/event_page/guest/' . $guest_key . '/' . $id);
     });
 
     $app->patch('/event_page/editname/{id}', function($id) use ($app) {
