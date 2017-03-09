@@ -2,13 +2,11 @@
 {% block content%}
 <div id="rsvp-page">
     <label for="event">Select an Event</label>
-    <select id="event" name="event">
+    <select id="event" class="form-control" name="event">
         {%for event in events%}
         <option value="{{event.getId}}">{{event.getName}}</option>
         {%endfor%}
     </select>
-    <label for="name">Your name:</label>
-    <input type="text" name="name" placeholder="What ur name tho?">
     <button type="submit" name="button">RSVP now!</button>
 </div>
 
