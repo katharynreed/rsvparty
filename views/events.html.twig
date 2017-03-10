@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+<h2>{{ user.getName }}</h2>
+
+    <h3>Your Event(s)</h3>
+    {% if events is not empty %}
+    <ul>
+        {% for event in events %}
+
+        <a href="/event_page/{{ event.getId }}"><li><h4>{{event.getName}}</h4></li></a>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>
+        <h4>There are no events listed for this user.</h4>
+    </p>
+    {% endif %}
+{% endblock %}

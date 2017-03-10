@@ -44,6 +44,12 @@
         return $app['twig']->render("user_profile.html.twig", ['user' => $user, 'events' => $events, 'session' => $_SESSION]);
     });
 
+    $app->get('/user/{id}/events', function($id) use ($app) {
+        $user = User::find($id);
+        $events = $user->getEvents();
+        return $app['twig']->render('events.html.twig', ['user' => $user, 'events' => $events, 'session' => $_SESSION]);
+    });
+
     $app->post('/login', function() {
         $user = User::findByUsername($_POST['username']);
         if ($user) {
